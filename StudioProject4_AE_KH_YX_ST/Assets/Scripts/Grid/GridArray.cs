@@ -48,7 +48,16 @@ public class GridArray : MonoBehaviour
     void GenerateGrid()
     {
         if (isGenerated)
-            return;
+        {
+            gridmesh = new GameObject[m_rows, m_columns];
+            for (int i = 0; i < transform.childCount; ++i)
+            {
+                int index_x = (int)transform.GetChild(i).GetComponent<Grid>().position.x;
+                int index_z = (int)transform.GetChild(i).GetComponent<Grid>().position.y;
+                gridmesh[index_x, index_z] = transform.GetChild(i).gameObject;
+            }
+                return;
+        }
         m_rows = (int)ground.terrainData.size.x / GridSizeX;
         m_columns = (int)ground.terrainData.size.z / GridSizeZ;
         gridmesh = new GameObject[m_rows, m_columns];
