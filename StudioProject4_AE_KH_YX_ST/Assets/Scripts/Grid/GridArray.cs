@@ -66,6 +66,7 @@ public class GridArray : MonoBehaviour
                 grid.transform.SetParent(gameObject.transform);
                 grid.GetComponent<Grid>().position.x = x;
                 grid.GetComponent<Grid>().position.y = z;
+				grid.GetComponent<Grid> ().isAvailable = !grid.GetComponent<Grid> ().CollidedWithTerrain ();
                 grid.GetComponent<Grid>().UpdateAvailability();
                 //, new Vector3(m_startingPlane.transform.position.x + x, m_startingPlane.transform.position.y, m_startingPlane.transform.position.z + z), m_startingPlane.transform.rotation);
                 gridmesh[x, z] = grid;

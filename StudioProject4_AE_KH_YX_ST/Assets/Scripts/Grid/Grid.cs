@@ -20,21 +20,18 @@ public class Grid : MonoBehaviour
 
         if (0.05 < ground.SampleHeight(minPos) &&  0.05 < ground.SampleHeight(maxPos))
         {
-            isAvailable = true;
             return true;
         }
-        isAvailable = false;
         return false;
     }
 
     void OnValidate()
     {
-        //UpdateAvailability();
+        UpdateAvailability();
     }
 
     public void UpdateAvailability()
     {
-        isAvailable = !CollidedWithTerrain();
         if (isAvailable)
         {
             GetComponent<Renderer>().material = materials[0];
