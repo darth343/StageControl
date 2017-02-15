@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 
 public class GridArray : MonoBehaviour
@@ -12,7 +11,6 @@ public class GridArray : MonoBehaviour
     public int m_rows;
     public int m_columns;
     public GameObject[,] gridmesh;
-    public Text debugtext;
 
 	// Use this for initialization
 	void Start ()
@@ -20,38 +18,18 @@ public class GridArray : MonoBehaviour
         GenerateGrid();	
 	}
 
-    public GameObject GetGridAtPosition(Vector3 position)
+    GameObject GetGridAtPosition(Vector3 position)
     {
-        int index_x = (int)(position.x - GridSizeX * 0.5f) / GridSizeX;
-        int index_z = (int)(position.z - GridSizeZ * 0.5f) / GridSizeZ;
-
-        if (index_x >= 0 && index_x <= m_rows &&
-            index_z >= 0 && index_z <= m_columns)
-        { 
-            return gridmesh[index_x, index_z];
-        }
-
         return null;
-    }
-
-    public Vector3 GetGridPosition(Grid grid)
-    {
-        if (grid.position.x >= 0 && grid.position.x <= m_rows &&
-            grid.position.y >= 0 && grid.position.y <= m_columns)
-        {
-            return gridmesh[(int)grid.position.x, (int)grid.position.y].GetComponent<Grid>().position;
-        }
-
-        return new Vector3(0, 0, 0);
     }
 
     void GenerateGrid()
     {
         if (isGenerated)
             return;
-        m_rows = (int)ground.terrainData.size.x / GridSizeX;
-        m_columns = (int)ground.terrainData.size.z / GridSizeZ;
-        gridmesh = new GameObject[m_rows, m_columns];
+        int m_rows = (int)ground.terrainData.size.x / GridSizeX;
+        int m_columns = (int)ground.terrainData.size.z / GridSizeZ;
+        gridmesh = new GameObject[m_rows, m_columns]; // hardcoded, not sure if const var can be changed in editor , change this if you don't want to hardcode Arun
         Debug.Log("run");
         // Create rows
         for (int x = 0; x < m_rows; x++)
@@ -62,10 +40,11 @@ public class GridArray : MonoBehaviour
                 GameObject grid = (GameObject)Instantiate(StartingGrid);
                 grid.name = "Row: " + x + " Col: " + z;
                 grid.transform.position = new Vector3(x * GridSizeX + GridSizeX * 0.5f, 0.8f, z * GridSizeZ + GridSizeZ * 0.5f);
-                grid.transform.localScale = new Vector3(GridSizeX, GridSizeZ, 1);
+                grid.transform.localScale = new Vector3(GridSizeX, 1, GridSizeZ);
                 grid.transform.SetParent(gameObject.transform);
                 grid.GetComponent<Grid>().position.x = x;
                 grid.GetComponent<Grid>().position.y = z;
+                grid.GetComponent<Grid>().UpdateAvailability();
                 //, new Vector3(m_startingPlane.transform.position.x + x, m_startingPlane.transform.position.y, m_startingPlane.transform.position.z + z), m_startingPlane.transform.rotation);
                 gridmesh[x, z] = grid;
             }

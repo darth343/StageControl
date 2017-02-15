@@ -3,9 +3,21 @@ using System.Collections;
 
 public class Grid : MonoBehaviour
 {
-    public Material[] materials = new Material[3];
+    public GameObject Avail;
+    public GameObject UnAvail;
     public bool isAvailable = true;
     public Vector2 position;
+
+    public void GenerateMeshes()
+    {
+        Avail.transform.localPosition = new Vector3(0, 0, 0);
+        Avail.transform.localScale = new Vector3(1, 1, 1);
+        Avail.transform.SetParent(gameObject.transform);
+
+        UnAvail.transform.localPosition = new Vector3(0, 0, 0);
+        UnAvail.transform.localScale = new Vector3(1, 1, 1);
+        UnAvail.transform.SetParent(gameObject.transform);
+    }
 
     public Vector3 GetWorldPosition()
     {
@@ -25,32 +37,26 @@ public class Grid : MonoBehaviour
         return false;
     }
 
-    void OnValidate()
-    {
-        UpdateAvailability();
-    }
-
     public void UpdateAvailability()
     {
+        isAvailable = !CollidedWithTerrain();
+
         if (isAvailable)
         {
-            GetComponent<Renderer>().material = materials[0];
+            Avail.SetActive(true);
+            UnAvail.SetActive(false);
         }
-        else 
+        else
         {
-            GetComponent<Renderer>().material = materials[1];           
+            Avail.SetActive(false);
+            UnAvail.SetActive(true);
         }
-    }
-
-    public void Select()
-    { 
-        
     }
 
 	// Use this for initialization
 	void Start () 
     {
-        isAvailable = !CollidedWithTerrain();
+        GenerateMeshes();
 	}
 	
 	// Update is called once per frame
