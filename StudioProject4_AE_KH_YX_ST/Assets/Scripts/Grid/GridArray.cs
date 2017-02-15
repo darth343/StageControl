@@ -34,6 +34,17 @@ public class GridArray : MonoBehaviour
         return null;
     }
 
+    public Vector3 GetGridPosition(Grid grid)
+    {
+        if (grid.position.x >= 0 && grid.position.x <= m_rows &&
+            grid.position.y >= 0 && grid.position.y <= m_columns)
+        {
+            return gridmesh[(int)grid.position.x, (int)grid.position.y].GetComponent<Grid>().position;
+        }
+
+        return new Vector3(0, 0, 0);
+    }
+
     void GenerateGrid()
     {
         if (isGenerated)
@@ -51,11 +62,10 @@ public class GridArray : MonoBehaviour
                 GameObject grid = (GameObject)Instantiate(StartingGrid);
                 grid.name = "Row: " + x + " Col: " + z;
                 grid.transform.position = new Vector3(x * GridSizeX + GridSizeX * 0.5f, 0.8f, z * GridSizeZ + GridSizeZ * 0.5f);
-                grid.transform.localScale = new Vector3(GridSizeX, 1, GridSizeZ);
+                grid.transform.localScale = new Vector3(GridSizeX, GridSizeZ, 1);
                 grid.transform.SetParent(gameObject.transform);
                 grid.GetComponent<Grid>().position.x = x;
                 grid.GetComponent<Grid>().position.y = z;
-                grid.GetComponent<Grid>().UpdateAvailability();
                 //, new Vector3(m_startingPlane.transform.position.x + x, m_startingPlane.transform.position.y, m_startingPlane.transform.position.z + z), m_startingPlane.transform.rotation);
                 gridmesh[x, z] = grid;
             }
