@@ -14,11 +14,11 @@ public class GridArray : MonoBehaviour
     public GameObject[,] gridmesh;
     public Text debugtext;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
-        GenerateGrid();	
-	}
+        GenerateGrid();
+    }
 
     public GameObject GetGridAtPosition(Vector3 position)
     {
@@ -27,7 +27,7 @@ public class GridArray : MonoBehaviour
 
         if (index_x >= 0 && index_x <= m_rows &&
             index_z >= 0 && index_z <= m_columns)
-        { 
+        {
             return gridmesh[index_x, index_z];
         }
 
@@ -66,14 +66,16 @@ public class GridArray : MonoBehaviour
                 grid.transform.SetParent(gameObject.transform);
                 grid.GetComponent<Grid>().position.x = x;
                 grid.GetComponent<Grid>().position.y = z;
+                grid.GetComponent<Grid>().UpdateAvailability();
                 //, new Vector3(m_startingPlane.transform.position.x + x, m_startingPlane.transform.position.y, m_startingPlane.transform.position.z + z), m_startingPlane.transform.rotation);
                 gridmesh[x, z] = grid;
             }
         }
     }
 
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

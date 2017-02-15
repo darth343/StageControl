@@ -15,8 +15,11 @@ ExportedObj/
 *.user
 *.userprefs
 *.pidb
+*.pdb
 *.booproj
 *.svd
+*.exe
+*.apk
 
 
 # Unity3D generated meta files
@@ -33,3 +36,4 @@ StudioProject4_AE_KH_YX_ST/Obj/
 StudioProject4_AE_KH_YX_ST/Build/
 StudioProject4_AE_KH_YX_ST/Builds/
 StudioProject4_AE_KH_YX_ST/Library/
+StudioProject4_AE_KH_YX_ST/StageControl_Data/

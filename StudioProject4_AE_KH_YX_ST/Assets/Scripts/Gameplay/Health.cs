@@ -19,8 +19,6 @@ public class Health : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-       // GameObject tempobject = SharedData.instance.gridmesh.GetGridAtPosition(transform.position);
-
         if (m_increase && m_health < m_limiter)
             m_health += (5 * Time.deltaTime);
         else if (m_increase)
