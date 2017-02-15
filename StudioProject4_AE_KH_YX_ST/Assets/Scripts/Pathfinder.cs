@@ -67,7 +67,6 @@ public class Pathfinder : MonoBehaviour
                 StartNode.posY = (int)SharedData.instance.gridmesh.GetGridPosition(StartGrid).y;
                 EndNode.posX = (int)SharedData.instance.gridmesh.GetGridPosition(EndGrid).x;
                 EndNode.posY = (int)SharedData.instance.gridmesh.GetGridPosition(EndGrid).y;
-                Debug.Log("Start Node: " + StartNode.posX + " " + StartNode.posY + "End Node: " + EndNode.posX + " " + EndNode.posY);
             }
         }
     }
