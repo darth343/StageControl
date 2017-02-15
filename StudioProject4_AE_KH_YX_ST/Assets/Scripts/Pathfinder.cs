@@ -32,11 +32,19 @@ public class Pathfinder : MonoBehaviour
     Node StartNode;
     Node EndNode;
 
+    public Vector3 StartPos;
+    public Vector3 EndPos;
+
 	// Use this for initialization
 	void Start ()
     {
-	
+	    
 	}
+
+    void onValidate()
+    {
+        InitializedStartandGoal = false;
+    }
 
     public void FindPath(Vector3 startposition, Vector3 endposition)
     {
@@ -59,7 +67,7 @@ public class Pathfinder : MonoBehaviour
                 StartNode.posY = (int)SharedData.instance.gridmesh.GetGridPosition(StartGrid).y;
                 EndNode.posX = (int)SharedData.instance.gridmesh.GetGridPosition(EndGrid).x;
                 EndNode.posY = (int)SharedData.instance.gridmesh.GetGridPosition(EndGrid).y;
-                //Debug.Log();
+                Debug.Log("Start Node: " + StartNode.posX + " " + StartNode.posY + "End Node: " + EndNode.posX + " " + EndNode.posY);
             }
         }
     }
