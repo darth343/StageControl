@@ -30,7 +30,7 @@ public class HealthBar : MonoBehaviour {
         // m_hp_fg.rectTransform.rect.Set(m_hp_fg.rectTransform.rect.x, m_hp_fg.rectTransform.rect.y, m_hp_fg.rectTransform.rect.width * (player_health.GetHealth() * 0.01f), m_hp_fg.rectTransform.rect.height);
         //m_hp_bg.rectTransform.sizeDelta = new Vector2(bg_width * (m_playerHealth.MAX_HEALTH * 0.01f), m_hp_bg.rectTransform.rect.height);
         m_hp_fg.rectTransform.sizeDelta = new Vector2(fg_width * (m_playerHealth.GetHealth() * 0.01f), m_hp_fg.rectTransform.rect.height);
-        m_hp_bg.rectTransform.position = new Vector3(this.transform.position.x, this.transform.position.y * 2 + 5f, this.transform.position.z);
+        m_hp_bg.rectTransform.position = new Vector3(this.transform.position.x - 20, this.transform.position.y * 2 + 5f, this.transform.position.z);
         //m_hp_bg.rectTransform.anchoredPosition = new Vector3(this.transform.position.x, this.transform.position.y + this.transform.localScale.y * 0.5f, this.transform.position.z);
     }
 
