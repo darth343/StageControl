@@ -8,12 +8,15 @@ public class UnitCards : MonoBehaviour {
 	public string buildingName;
 	public string UnitType;
 	public int goldValue;
+    public GameObject GOModel;
     RectTransform card;
+    public Text statsText;
     float w,h;
 	// Use this for initialization
 	void Start () {
         w = GetComponent<RectTransform>().rect.width;
         h = GetComponent<RectTransform>().rect.height;
+        SetText();
 	}
 	
 	// Update is called once per frame
@@ -34,6 +37,11 @@ public class UnitCards : MonoBehaviour {
     void OnHoverExit()
     {
 
+    }
+
+    public void SetText()
+    {
+        statsText.text = UnitType + "\n" + goldValue;
     }
 		
 }
