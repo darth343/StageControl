@@ -11,6 +11,7 @@ public class UnitCards : MonoBehaviour {
     public GameObject GOModel;
     RectTransform card;
     public Text statsText;
+    public Text nameText;
     float w,h;
 	// Use this for initialization
 	void Start () {
@@ -47,6 +48,7 @@ public class UnitCards : MonoBehaviour {
     public void SetText()
     {
         statsText.text = "Unit Type: " + UnitType + "\n" + "Gold: " + goldValue;
+        nameText.text = buildingName;
     }
 		
 }
