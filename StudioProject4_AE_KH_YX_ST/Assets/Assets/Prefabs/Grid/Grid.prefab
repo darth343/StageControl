@@ -91,8 +91,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: bc553d97d9e00b14792603140fcc719b, type: 2}
   - {fileID: 2100000, guid: 0d7fd7ba56219cb4c9d2dd0e15e785ba, type: 2}
   - {fileID: 2100000, guid: dab76a4231d364644826adbe14593833, type: 2}
-  isAvailable: 1
+  - {fileID: 2100000, guid: faee7e3af3601c24dbaa2412de7aa8ce, type: 2}
+  - {fileID: 2100000, guid: c86af6f423959e24588607dc1bffc001, type: 2}
   position: {x: 0, y: 0}
+  state: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

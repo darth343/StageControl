@@ -26,6 +26,16 @@ public class GridArray : MonoBehaviour
         int index_x = (int)(position.x - GridSizeX * 0.5f) / GridSizeX;
         int index_z = (int)(position.z - GridSizeZ * 0.5f) / GridSizeZ;
 
+        if (index_x < 0 || index_x >= 50)
+        {
+            int a = 0;
+        }
+
+        if (index_z < 0 || index_z >= 50)
+        {
+            int a = 0;
+        }
+
         if (index_x >= 0 && index_x <= m_rows &&
             index_z >= 0 && index_z <= m_columns)
         {
@@ -91,7 +101,6 @@ public class GridArray : MonoBehaviour
         m_rows = (int)ground.terrainData.size.x / GridSizeX;
         m_columns = (int)ground.terrainData.size.z / GridSizeZ;
         gridmesh = new GameObject[m_rows, m_columns];
-        Debug.Log("run");
         // Create rows
         for (int x = 0; x < m_rows; x++)
         { // Create columns
@@ -105,7 +114,7 @@ public class GridArray : MonoBehaviour
                 grid.transform.SetParent(gameObject.transform);
                 grid.GetComponent<Grid>().position.x = x;
                 grid.GetComponent<Grid>().position.y = z;
-				grid.GetComponent<Grid> ().isAvailable = !grid.GetComponent<Grid> ().CollidedWithTerrain ();
+				grid.GetComponent<Grid> ().state = grid.GetComponent<Grid>().CollidedWithTerrain();
                 grid.GetComponent<Grid>().UpdateAvailability();
                 //, new Vector3(m_startingPlane.transform.position.x + x, m_startingPlane.transform.position.y, m_startingPlane.transform.position.z + z), m_startingPlane.transform.rotation);
                 gridmesh[x, z] = grid;
