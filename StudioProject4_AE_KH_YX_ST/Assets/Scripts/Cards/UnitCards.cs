@@ -34,6 +34,11 @@ public class UnitCards : MonoBehaviour {
     
     }
 
+    public void ResetCardPos()
+    {
+        SharedData.instance.handhandler.ResetCardPos();
+    }
+
     void OnHoverExit()
     {
 
