@@ -23,7 +23,8 @@ public class Instantiation : MonoBehaviour {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (ground.GetComponent<Collider>().Raycast(ray, out vHit, 1000.0f))
         {
-            Instantiate(building, vHit.point, Quaternion.identity);
+            GameObject temp =  Instantiate(building);
+            temp.transform.position = vHit.point;
         }
     }
 
