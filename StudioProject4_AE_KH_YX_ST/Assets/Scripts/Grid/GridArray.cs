@@ -20,6 +20,7 @@ public class GridArray : MonoBehaviour
         GenerateGrid();
     }
 
+    // Gets gameobject at position passed in or returns null if there is nothing there
     public GameObject GetGridAtPosition(Vector3 position)
     {
         int index_x = (int)(position.x - GridSizeX * 0.5f) / GridSizeX;
@@ -43,6 +44,35 @@ public class GridArray : MonoBehaviour
         }
 
         return new Vector3(0, 0, 0);
+    }
+
+    // Gets grid index in Vec2 at position argument or returns zero vector if theres none
+    public Vector3 GetGridIndexAtPosition(Vector3 position)
+    {
+        // index_x and z are coordinates offsetted by (half of size of 1 grid) and converted to grid coordinates
+        int index_x = (int)(position.x - GridSizeX * 0.5f) / GridSizeX;
+        int index_z = (int)(position.z - GridSizeZ * 0.5f) / GridSizeZ;
+
+        if (index_x >= 0 && index_x <= m_rows &&
+            index_z >= 0 && index_z <= m_columns)
+        {
+            return new Vector3(index_x, index_z);
+        }
+
+        return Vector2.zero;
+    }
+
+    // Gets position from supplied grid coordinates
+    public Vector3 GetPositionAtGrid(int gridx_, int gridz_)
+    {
+        float positionX = gridx_ * GridSizeX + GridSizeX * 0.5f; // might lose precision at GetGridAtPosition's static conversion to int but its negligible
+        float positionZ = gridz_ * GridSizeZ + GridSizeZ * 0.5f;
+        return new Vector3(positionX, 0, positionZ);
+    }
+
+    public float GetTerrainHeightAtGrid(Vector3 pos)
+    {
+        return ground.SampleHeight(pos);
     }
 
     void GenerateGrid()
