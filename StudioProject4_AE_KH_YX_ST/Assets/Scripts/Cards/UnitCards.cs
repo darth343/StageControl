@@ -46,7 +46,7 @@ public class UnitCards : MonoBehaviour {
 
     public void SetText()
     {
-        statsText.text = UnitType + "\n" + goldValue;
+        statsText.text = "Unit Type: " + UnitType + "\n" + "Gold: " + goldValue;
     }
 		
 }
