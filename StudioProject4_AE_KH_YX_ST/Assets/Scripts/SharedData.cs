@@ -7,7 +7,14 @@ public class SharedData : MonoBehaviour {
     public GridArray gridmesh;
     public Text debuginfo;
     public Terrain ground;
+    
+    //handlers
     public HandHandler handhandler;
+    public DragHandler draghandler;
+    public Instantiation buildhandler;
+
+
+    public bool isHoldingCard = false;
 	// Use this for initialization
 	void Start ()
     {
