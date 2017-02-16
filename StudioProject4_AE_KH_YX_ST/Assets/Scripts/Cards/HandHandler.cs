@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class HandHandler : MonoBehaviour {
 
     //change to card objects later
   
-    public Image[] cardlist;//not more than 5
+    public List<Image> cardlist ;//not more than 5
     public int dist,handsize;//has to almosta lways be 5
 
     public RectTransform canvas,cardarea;
@@ -16,7 +17,7 @@ public class HandHandler : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         dist = 50;
-        handsize = cardlist.Length;
+        handsize = cardlist.Count;
         m = cardarea.rect.height*0.02f;
         center = canvas.rect.width*canvas.localScale.x *0.5f;
         //cardarea.GetComponent<RectTransform>().rect.x = 
@@ -36,13 +37,13 @@ public class HandHandler : MonoBehaviour {
 	 
 	}
 
-    void SetCardPos()
+    public void SetCardPos()
     {
         //when down to the last five cards(adda check later)
         // 
         //five card placement
         leftstart = -100 + ((5-handsize) * 25);
-        for (int i = 0; i < cardlist.Length; i++)
+        for (int i = 0; i < cardlist.Count; i++)
         {
             Vector3 newpos = GetCurvePos(i);
             cardlist[i].rectTransform.position = newpos;
@@ -57,6 +58,33 @@ public class HandHandler : MonoBehaviour {
 
                 //if (i == handsize / 2 + 1)//center card
                    cardlist[i].rectTransform.Rotate(new Vector3(0, 0, 1), maxdegree-(10*i), 0);
+
+            }
+        }
+
+    }
+
+    public void ResetCardPos()
+    {
+        leftstart = -100 + ((5 - handsize) * 25);
+        for (int i = 0; i < cardlist.Count; i++)
+        {
+            Vector3 newpos = GetCurvePos(i);
+            cardlist[i].rectTransform.position = newpos;
+            cardlist[i].rectTransform.localScale = (new Vector3(1,1,1));
+
+
+            cardlist[i].rectTransform.rotation = Quaternion.identity;
+            if (!odd)//no center
+            {
+                
+                cardlist[i].rectTransform.Rotate(new Vector3(0, 0, 1), maxdegree - (i * 10 + i * 3), 0);
+
+            }
+            if (odd)
+            {
+
+                cardlist[i].rectTransform.Rotate(new Vector3(0, 0, 1), maxdegree - (10 * i), 0);
 
             }
         }

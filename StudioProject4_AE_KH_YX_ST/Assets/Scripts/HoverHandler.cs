@@ -2,10 +2,15 @@
 using System.Collections;
 using UnityEngine.UI;
 public class HoverHandler : MonoBehaviour {
-    public RectTransform selected;
+    static public RectTransform selected;
+    public int origin;
+    public float temprotatex, temprotatey, temprotatez;
+    public Vector3 rotate;
+    float tempw;
 	// Use this for initialization
 	void Start () {
-	
+        
+        
 	}
 	
 	// Update is called once per frame
@@ -14,16 +19,34 @@ public class HoverHandler : MonoBehaviour {
 	}
     public void OnMouseEnter()
     {
-        selected = this.gameObject.GetComponent<RectTransform>();
-        //Image card = GetComponent<Image>();
-        //selected.rectTransform.localScale.Set(3,3,3);
-        //selected.rectTransform.rect.size.Set(100, 100);
-        Debug.Log("fuck");
+
+        
+        selected = gameObject.GetComponent<RectTransform>();
+        selected.localScale = new Vector3(2, 2, 1);
+        tempw = selected.localRotation.w;
+        rotate.z= selected.localRotation.z;
+        rotate.x = selected.localRotation.x;
+        rotate.y = selected.localRotation.y;
+        selected.localRotation = Quaternion.Euler(0,0,0);
+        selected.position = new Vector3(selected.position.x,100, selected.position.z);
+
+        origin = transform.GetSiblingIndex();
+
+        //move to the front of the UI
+        transform.SetAsLastSibling();
+
+        Debug.Log("on");
 
     }
 
     public void OnMouseExit()
     {
+        selected = gameObject.GetComponent<RectTransform>();
+        selected.rotation.Set(0, 0, rotate.z, tempw);
+        selected.position = new Vector3(selected.position.x, (selected.position.y -100f), selected.position.z);
 
+        
+        selected.localScale = new Vector3(1, 1, 1);
+        Debug.Log("off");
     }
 }
