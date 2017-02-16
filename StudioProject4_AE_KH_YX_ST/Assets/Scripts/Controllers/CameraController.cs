@@ -44,7 +44,9 @@ public class CameraController : MonoBehaviour
     //}
 
     void OnButtonDown()
-    { 
+    {
+
+
 #if UNITY_ANDROID
         lastcameraposition = GetComponent<Camera>().transform.position;
         lasttouchposition = Input.GetTouch(0).position;
@@ -69,6 +71,8 @@ public class CameraController : MonoBehaviour
 
     void OnDrag()
     {
+        if (SharedData.instance.isHoldingCard)
+            return;
 #if UNITY_ANDROID
         SetCameraPosition(new Vector3(lastcameraposition.x + (lasttouchposition.x - Input.GetTouch(0).position.x) * sensitivityX, lastcameraposition.y, lastcameraposition.z + (lasttouchposition.y - Input.mousePosition.y) * sensitivityY));
         RaycastHit hit;

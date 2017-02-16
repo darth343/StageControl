@@ -17,7 +17,7 @@ public class Instantiation : MonoBehaviour {
             build();
 	}
 
-    void build()
+    public void build()
     {
         RaycastHit vHit = new RaycastHit();
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -28,6 +28,17 @@ public class Instantiation : MonoBehaviour {
         }
     }
 
+
+    public void build(GameObject attatchedbuilding)
+    {
+        RaycastHit vHit = new RaycastHit();
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (ground.GetComponent<Collider>().Raycast(ray, out vHit, 1000.0f))
+        {
+            GameObject temp = Instantiate(attatchedbuilding);
+            temp.transform.position = vHit.point;
+        }
+    }
 
     void Create()
     {
