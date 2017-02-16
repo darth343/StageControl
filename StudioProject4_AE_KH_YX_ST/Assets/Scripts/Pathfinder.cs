@@ -24,16 +24,16 @@ public class Node
 
 public class Pathfinder : MonoBehaviour 
 {
-    List<Node> OpenList;
-    List<Node> ClosedList;
-    List<Vector3> PathToEnd;
+    List<Node> OpenList = new List<Node>();
+    List<Node> ClosedList = new List<Node>();
+    List<Vector3> PathToEnd = new List<Vector3>();
     bool InitializedStartandGoal = false;
-    bool PathFound;
-    Node StartNode;
-    Node EndNode;
+    Node StartNode = new Node();
+    Node EndNode = new Node();
 
-    public Vector3 StartPos;
-    public Vector3 EndPos;
+    public bool PathFound = true;
+    public Vector3 StartPos = new Vector3();
+    public Vector3 EndPos = new Vector3();
 
 	// Use this for initialization
 	void Start ()
@@ -67,13 +67,16 @@ public class Pathfinder : MonoBehaviour
                 StartNode.posY = (int)SharedData.instance.gridmesh.GetGridPosition(StartGrid).y;
                 EndNode.posX = (int)SharedData.instance.gridmesh.GetGridPosition(EndGrid).x;
                 EndNode.posY = (int)SharedData.instance.gridmesh.GetGridPosition(EndGrid).y;
-                Debug.Log("Start Node: " + StartNode.posX + " " + StartNode.posY + "End Node: " + EndNode.posX + " " + EndNode.posY);
             }
         }
     }
 
 	// Update is called once per frame
-	void Update () {
-	
+	void Update ()
+    {
+        if (!PathFound)
+        {
+            FindPath(StartPos, EndPos);
+        }
 	}
 }

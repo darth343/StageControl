@@ -7,6 +7,7 @@ public class SharedData : MonoBehaviour {
     public GridArray gridmesh;
     public Text debuginfo;
     public Terrain ground;
+    public HandHandler handhandler;
 	// Use this for initialization
 	void Start ()
     {
