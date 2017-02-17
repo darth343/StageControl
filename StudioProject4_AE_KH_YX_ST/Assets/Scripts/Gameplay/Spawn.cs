@@ -21,7 +21,7 @@ public class Spawn : MonoBehaviour {
 
 	void Start () {
         m_timer = this.gameObject.AddComponent<Timer>();
-        m_timer.Init(0, m_secondsToSpawn, 0); 
+        m_timer.Init(0, m_secondsToSpawn, 0);
 	}
 
 	void Update () {
@@ -54,6 +54,8 @@ public class Spawn : MonoBehaviour {
                 imgChild.color = Color.green;
                 //spawn.AddComponent<HealthBar>(); // Give it a healthbar
                 Vector2 this_grid = SharedData.instance.gridmesh.GetGridIndexAtPosition(transform.position);
+                //SharedData.instance.gridmesh.GetGridAtPosition(transform.position);
+                SharedData.instance.gridmesh.GetOccupiedGrids(transform.position, transform.localScale);
                 Debug.Log(transform.position);
                 int orientationX;
                 int orientationZ;
