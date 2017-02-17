@@ -45,6 +45,63 @@ public class GridArray : MonoBehaviour
         return null;
     }
 
+    // Takes in a gameobject position and scale and returns which grids it occupies in the form on their grid index x and y
+    public Vector2[] GetOccupiedGrids(Vector3 position, Vector3 scale)
+    {
+        int index_x = (int)(position.x - GridSizeX * 0.5f) / GridSizeX;
+        int index_z = (int)(position.z - GridSizeZ * 0.5f) / GridSizeZ;
+        float halfScaleX = (scale.x * 0.5f - GridSizeX * 0.5f) / GridSizeX;
+        float halfScaleZ = (scale.z * 0.5f - GridSizeZ * 0.5f) / GridSizeZ;//scale.z / 10f * 0.5f;
+        Vector3 minpos = new Vector3(position.x + halfScaleX, position.y, position.z + halfScaleZ);
+        Vector3 maxpos = new Vector3(position.x - halfScaleX, position.y, position.z - halfScaleZ);
+        Vector3 min = new Vector3(position.x + 10, position.y, position.z + 10);
+        Vector3 max = new Vector3(position.x - 10, position.y, position.z - 10);
+        int index_minx = (int)(minpos.x - GridSizeX * 0.5f) / GridSizeX;
+        int index_minz = (int)(minpos.z - GridSizeZ * 0.5f) / GridSizeZ;
+        int index_maxx = (int)(maxpos.x - GridSizeX * 0.5f) / GridSizeX;
+        int index_maxz = (int)(maxpos.z - GridSizeZ * 0.5f) / GridSizeZ;
+
+        //gridmesh[index_x, index_z].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
+        //gridmesh[index_minx + 1, index_minz + 1].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
+        //gridmesh[index_maxx, index_maxz].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
+
+        int diffX = index_maxx - (index_minx + 1);
+        int diffZ = index_maxz - (index_minz + 1);
+        //for (int i = index_minx + 1; i < index_minx + diffX; ++i)
+        //{
+        //    Debug.Log("Why you work?!");
+        //    for (int j = index_minz + 1; j < index_minz + diffZ; ++j)
+        //    {
+        //        gridmesh[index_minx + i, index_minz + j].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
+        //    }
+        //}
+        for (int i = index_minx + 1; i >= index_maxx; --i)
+        {
+            for (int j = index_minz + 1; j >= index_maxz; --j)
+            {
+                gridmesh[i, j].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
+            }
+        }
+
+        if (index_x < 0 || index_x >= 50)
+        {
+            int a = 0;
+        }
+
+        if (index_z < 0 || index_z >= 50)
+        {
+            int a = 0;
+        }
+
+        if (index_x >= 0 && index_x <= m_rows &&
+            index_z >= 0 && index_z <= m_columns)
+        {
+            //return gridmesh[index_x, index_z];
+        }
+
+        return null;
+    }
+
     public Vector3 GetGridPosition(Grid grid)
     {
         if (grid.position.x >= 0 && grid.position.x <= m_rows &&
