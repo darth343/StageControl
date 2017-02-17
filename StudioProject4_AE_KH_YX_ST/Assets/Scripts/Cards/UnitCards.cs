@@ -18,6 +18,7 @@ public class UnitCards : MonoBehaviour {
         w = GetComponent<RectTransform>().rect.width;
         h = GetComponent<RectTransform>().rect.height;
         SetText();
+        GenerateBuilding();
 	}
 	
 	// Update is called once per frame
@@ -33,6 +34,11 @@ public class UnitCards : MonoBehaviour {
             Debug.Log("fuck");
         }
     
+    }
+
+    public void GenerateBuilding()
+    {
+        GOModel = Instantiate(GOModel);
     }
 
     public void ResetCardPos()
