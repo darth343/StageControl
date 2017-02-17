@@ -10,11 +10,19 @@ public class CameraController : MonoBehaviour
     public float zoomPCSensitivity;
     public float zoomAndroidSensitivity;
     public float CameraDistanceFromTerrain;
+    public float MinConstrainX;
+    public float MaxConstrainX;
+    public float MinConstrainZ;
+    public float MaxConstrainZ;
+    public float zoomMaxLevel;
+    public float zoomMinLevel;
     float defaultCameraDistanceFromTerrain;
     public Terrain ground;
-    Vector2 lasttouchposition;
+    Vector3 lasttouchposition;
     Vector3 lastcameraposition;
     public Text debugtext;
+    Vector3 newCameraPos = new Vector3();
+    Vector3 movementDelta = new Vector3();
     void SetCameraPosition(Vector3 newPosition)
     {
         GetComponent<Camera>().transform.position = newPosition;
@@ -84,7 +92,15 @@ public class CameraController : MonoBehaviour
             SetCameraPosition(ray.GetPoint(hit.distance) + (direction * CameraDistanceFromTerrain));
         }
 #else
-        SetCameraPosition(new Vector3(lastcameraposition.x + (lasttouchposition.x - Input.mousePosition.x) * sensitivityX, lastcameraposition.y, lastcameraposition.z + (lasttouchposition.y - Input.mousePosition.y) * sensitivityY));
+        float xdelta = (lasttouchposition.x - Input.mousePosition.x) * sensitivityX;
+        float ydelta = (lasttouchposition.y - Input.mousePosition.y) * sensitivityY;
+        //newCameraPos.Set(Mathf.Clamp(lastcameraposition.x + (lasttouchposition.x - Input.mousePosition.x) * sensitivityX, MinConstrainX, MaxConstrainX), lastcameraposition.y, Mathf.Clamp(lastcameraposition.z + (lasttouchposition.y - Input.mousePosition.y) * sensitivityY, MinConstrainZ, MaxConstrainZ));
+        newCameraPos = GetCamera().transform.position;
+        newCameraPos.x += GetCamera().transform.forward.x * ydelta + GetCamera().transform.right.x * xdelta;
+        newCameraPos.z += GetCamera().transform.forward.z * ydelta + GetCamera().transform.right.z * xdelta;
+        newCameraPos.x = Mathf.Clamp(newCameraPos.x, MinConstrainX, MaxConstrainX);
+        newCameraPos.z = Mathf.Clamp(newCameraPos.z, MinConstrainZ, MaxConstrainZ);
+        SetCameraPosition(newCameraPos);
         RaycastHit hit;
         Ray ray = GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0));
         if (ground.GetComponent<Collider>().Raycast(ray, out hit, 1000.0f))
@@ -97,8 +113,27 @@ public class CameraController : MonoBehaviour
                 GetCamera().transform.position = new Vector3(GetCamera().transform.position.x, groundy, GetCamera().transform.position.z);
             }
         }
+        lasttouchposition = Input.mousePosition;
 #endif
         debugtext.text = "PANNING\nCamera Pos: [" + GetCamera().transform.position.x + "," + GetCamera().transform.position.y + "," + GetCamera().transform.position.z + "]";
+    }
+
+    void zoomUpdate()
+    {
+        zoomlevel = Mathf.Clamp(zoomlevel - Input.GetAxis("Mouse ScrollWheel"), zoomMinLevel, zoomMaxLevel);
+        CameraDistanceFromTerrain = defaultCameraDistanceFromTerrain * zoomlevel;
+        RaycastHit hit;
+        Ray ray = GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0));
+        if (ground.GetComponent<Collider>().Raycast(ray, out hit, 1000.0f))
+        {
+            Vector3 direction = new Vector3(-GetCamera().transform.forward.x, -GetCamera().transform.forward.y, -GetCamera().transform.forward.z).normalized;
+            ground.SampleHeight(ray.GetPoint(hit.distance));
+            newCameraPos = ray.GetPoint(hit.distance) + (direction * CameraDistanceFromTerrain);
+            newCameraPos.x = Mathf.Clamp(newCameraPos.x, MinConstrainX, MaxConstrainX);
+            newCameraPos.z = Mathf.Clamp(newCameraPos.z, MinConstrainZ, MaxConstrainZ);
+            SetCameraPosition(newCameraPos);
+        }
+        debugtext.text = "ZOOMING\nZoom Out Level: " + zoomlevel;
     }
 
     void Start()
@@ -110,6 +145,20 @@ public class CameraController : MonoBehaviour
         LeftMouseDown = false;
 #endif
         defaultCameraDistanceFromTerrain = CameraDistanceFromTerrain;
+
+        //SetCameraPosition(new Vector3(transform.position.x + (transform.position.x - Input.mousePosition.x) * sensitivityX, lastcameraposition.y, lastcameraposition.z + (lasttouchposition.y - Input.mousePosition.y) * sensitivityY));
+        RaycastHit hit;
+        Ray ray = GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0));
+        if (ground.GetComponent<Collider>().Raycast(ray, out hit, 1000.0f))
+        {
+            Vector3 direction = new Vector3(-GetCamera().transform.forward.x, -GetCamera().transform.forward.y, -GetCamera().transform.forward.z).normalized;
+            SetCameraPosition(ray.GetPoint(hit.distance) + (direction * CameraDistanceFromTerrain));
+            float groundy = ground.SampleHeight(GetCamera().transform.position);
+            if (GetCamera().transform.position.y < groundy)
+            {
+                GetCamera().transform.position = new Vector3(GetCamera().transform.position.x, groundy, GetCamera().transform.position.z);
+            }
+        }
         //GetComponent<Camera>().transform.position = new Vector3(GetComponent<Camera>().transform.position.x, ground.SampleHeight(GetComponent<Camera>().transform.position) + CameraHeight, GetComponent<Camera>().transform.position.z);
     }
 
@@ -182,17 +231,7 @@ public class CameraController : MonoBehaviour
 
         if(Input.GetAxis("Mouse ScrollWheel") != 0f)
         {
-            zoomlevel = Mathf.Clamp(zoomlevel - Input.GetAxis("Mouse ScrollWheel"), 1, 10);
-            CameraDistanceFromTerrain = defaultCameraDistanceFromTerrain * zoomlevel;
-            RaycastHit hit;
-            Ray ray = GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0));
-            if (ground.GetComponent<Collider>().Raycast(ray, out hit, 1000.0f))
-            {
-                Vector3 direction = new Vector3(-GetCamera().transform.forward.x, -GetCamera().transform.forward.y, -GetCamera().transform.forward.z).normalized;
-                ground.SampleHeight(ray.GetPoint(hit.distance));
-                SetCameraPosition(ray.GetPoint(hit.distance) + (direction * CameraDistanceFromTerrain));
-            }
-            debugtext.text = "ZOOMING\nZoom Out Level: " + zoomlevel;
+            zoomUpdate();
         }
 #endif
         

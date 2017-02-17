@@ -37,7 +37,7 @@ public class Pathfinder : MonoBehaviour
     Node EndNode = new Node();
 
     public bool PathFound = true;
-    public Vector3 StartPos = new Vector3();
+    //public Vector3 StartPos = new Vector3();
     public Vector3 EndPos = new Vector3();
 
     float ResetTimer = 0f;
@@ -70,7 +70,7 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
-    public void FindPath(Vector3 startposition, Vector3 endposition)
+    public void FindPath(Vector3 endposition)
     {
         for (int i = 0; i < 10; ++i)
         {
@@ -84,7 +84,7 @@ public class Pathfinder : MonoBehaviour
 
             if (!InitializedStartandGoal && !PathFound)
             {
-                Grid StartGrid = SharedData.instance.gridmesh.GetGridAtPosition(startposition).GetComponent<Grid>();
+                Grid StartGrid = SharedData.instance.gridmesh.GetGridAtPosition(transform.position).GetComponent<Grid>();
                 Grid EndGrid = SharedData.instance.gridmesh.GetGridAtPosition(endposition).GetComponent<Grid>();
                 StartNode.posX = (int)SharedData.instance.gridmesh.GetGridPosition(StartGrid).x;
                 StartNode.posY = (int)SharedData.instance.gridmesh.GetGridPosition(StartGrid).y;
@@ -152,7 +152,7 @@ public class Pathfinder : MonoBehaviour
     void 
         OpenNode(int posX, int posY, float newCost, Node parent)
     {
-        if (posX < 0 || posX > 49 || posY < 0 || posY > 49)
+        if (posX < 0 || posX > SharedData.instance.gridmesh.m_rows - 1|| posY < 0 || posY > SharedData.instance.gridmesh.m_columns - 1)
         {
             //Debug.Log("X:" + posX + "Y:" + posY);
             return;
@@ -244,7 +244,7 @@ public class Pathfinder : MonoBehaviour
     {
         if (!PathFound)
         {
-            FindPath(StartPos, EndPos);
+            FindPath(EndPos);
         }
         else 
         {
