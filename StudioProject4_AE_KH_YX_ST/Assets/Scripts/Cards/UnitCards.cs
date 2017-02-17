@@ -2,6 +2,16 @@
 using UnityEngine.UI;
 using System.Collections;
 
+public enum CARD_TYPE
+{
+    BALLISTA,
+    BUSTER,
+    IRON_GOLEM,
+    CLOCKWORK,
+    RAILGUN,
+    SPIDERTANK
+}
+
 
 public class UnitCards : MonoBehaviour {
 
@@ -12,6 +22,7 @@ public class UnitCards : MonoBehaviour {
     RectTransform card;
     public Text statsText;
     public Text nameText;
+    public CARD_TYPE cardType;
     float w,h;
 	// Use this for initialization
 	void Start () {
