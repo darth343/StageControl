@@ -22,11 +22,12 @@ public class Spawn : MonoBehaviour {
 	void Start () {
         m_timer = this.gameObject.AddComponent<Timer>();
         m_timer.Init(0, m_secondsToSpawn, 0);
-        SharedData.instance.gridmesh.GetOccupiedGrids(transform.position, transform.localScale);
+        //SharedData.instance.gridmesh.GetOccupiedGrids(transform.position, transform.localScale);
 	}
 
 	void Update () {
         m_timer.Update();
+        SharedData.instance.gridmesh.GetOccupiedGrids(transform.position, transform.localScale);
         if (m_timer.can_run && m_spawnAmt > 0)
         {
             GameObject spawn;
