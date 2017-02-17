@@ -24,7 +24,7 @@ public class SharedData : MonoBehaviour {
     public SortedList<CARD_TYPE, GameObject> CardDatabase = new SortedList<CARD_TYPE, GameObject>();
 
     //Decks
-    public GameObject PlayerDeck;
+    public GameObject PlayerDeck = null;
 
 
     public bool isHoldingCard = false;
@@ -48,6 +48,7 @@ public class SharedData : MonoBehaviour {
             if (DatabasePopulater != null)
                 DatabasePopulater.Clear();
 
+            if(PlayerDeck != null)
             PlayerDeck.GetComponent<Deck>().GenerateDeck();
         }else
         {

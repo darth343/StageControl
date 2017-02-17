@@ -62,9 +62,9 @@ public class GridArray : MonoBehaviour
         int index_maxx = (int)(maxpos.x - GridSizeX * 0.5f) / GridSizeX;
         int index_maxz = (int)(maxpos.z - GridSizeZ * 0.5f) / GridSizeZ;
 
-        gridmesh[index_x, index_z].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
-        gridmesh[index_minx + 1, index_minz + 1].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
-        gridmesh[index_maxx, index_maxz].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
+        //gridmesh[index_x, index_z].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
+        //gridmesh[index_minx + 1, index_minz + 1].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
+        //gridmesh[index_maxx, index_maxz].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
 
         int diffX = index_maxx - (index_minx + 1);
         int diffZ = index_maxz - (index_minz + 1);
@@ -172,7 +172,10 @@ public class GridArray : MonoBehaviour
                 grid.transform.position = new Vector3(x * GridSizeX + GridSizeX * 0.5f, 0.8f, z * GridSizeZ + GridSizeZ * 0.5f);
                 grid.transform.localScale = new Vector3(GridSizeX, GridSizeZ, 1);
                 grid.transform.SetParent(gameObject.transform);
-                grid.GetComponent<Renderer>().enabled = false;
+
+                //disable grid rendering(for actual playtest)
+                //grid.GetComponent<Renderer>().enabled = false;
+                
                 grid.GetComponent<Grid>().position.x = x;
                 grid.GetComponent<Grid>().position.y = z;
 				grid.GetComponent<Grid> ().state = grid.GetComponent<Grid>().CollidedWithTerrain();
