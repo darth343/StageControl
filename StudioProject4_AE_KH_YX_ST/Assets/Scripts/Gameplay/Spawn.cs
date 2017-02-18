@@ -27,7 +27,7 @@ public class Spawn : MonoBehaviour {
 
 	void Update () {
         m_timer.Update();
-        SharedData.instance.gridmesh.GetOccupiedGrids(transform.position, transform.localScale);
+        //SharedData.instance.gridmesh.RenderBuildGrids(transform.position, transform.localScale);
         if (m_timer.can_run && m_spawnAmt > 0)
         {
             GameObject spawn;
@@ -58,7 +58,7 @@ public class Spawn : MonoBehaviour {
                 Vector2 this_grid = SharedData.instance.gridmesh.GetGridIndexAtPosition(transform.position);
                 //SharedData.instance.gridmesh.GetGridAtPosition(transform.position);
          
-                Debug.Log(transform.position);
+                //Debug.Log(transform.position);
                 int orientationX;
                 int orientationZ;
                 switch (m_orientationX)

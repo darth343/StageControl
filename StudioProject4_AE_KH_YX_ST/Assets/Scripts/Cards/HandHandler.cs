@@ -12,7 +12,8 @@ public class HandHandler : MonoBehaviour {
 
     public RectTransform canvas,cardarea;
     float m,center,leftstart,maxdegree;
-   public bool odd;
+   public bool odd,inPlayArea;
+
 
 	// Use this for initialization
 	void Start () {
@@ -20,8 +21,8 @@ public class HandHandler : MonoBehaviour {
         handsize = cardlist.Count;
         m = cardarea.rect.height*0.02f;
         center = canvas.rect.width*canvas.localScale.x *0.5f;
+        inPlayArea = false;
         //cardarea.GetComponent<RectTransform>().rect.x = 
-        Debug.Log(m);
 
 
         if (handsize % 2 != 0)
@@ -36,6 +37,25 @@ public class HandHandler : MonoBehaviour {
 	void Update () {
 	 
 	}
+
+    public bool onPlayArea(Vector2 screenpoint)
+    {
+        if(RectTransformUtility.RectangleContainsScreenPoint(cardarea,screenpoint))
+        { 
+            return false;
+        }
+        else 
+            return true;
+        
+    }
+
+    public void RemoveCard(GameObject card)
+    {
+        card.SetActive(false);
+        cardlist.Remove(card);
+        handsize = cardlist.Count;
+        ResetCardPos();
+    }
 
     public void SetCardPos()
     {
@@ -90,6 +110,14 @@ public class HandHandler : MonoBehaviour {
         }
 
     }
+
+    public void SetOnplayArea(bool var)
+    {
+        inPlayArea = var;
+    }
+
+
+
     Vector3 GetCurvePos(int slotno)
     {
         //y = (wx)^2 - m

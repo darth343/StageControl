@@ -35,7 +35,7 @@ public class HoverHandler : MonoBehaviour {
         //move to the front of the UI
         transform.SetAsLastSibling();
 
-        Debug.Log("on");
+        //Debug.Log("on");
 
     }
 
@@ -48,5 +48,18 @@ public class HoverHandler : MonoBehaviour {
         
         selected.localScale = new Vector3(1, 1, 1);
         Debug.Log("off");
+    }
+
+    public void PanelEnter()
+    {
+        Debug.Log("onpanel");
+        SharedData.instance.handhandler.SetOnplayArea(false);
+       
+    }
+
+    public void PanelExit()
+      {
+          Debug.Log("offpanel");
+          SharedData.instance.handhandler.SetOnplayArea(true);
     }
 }

@@ -15,6 +15,7 @@ public class SharedData : MonoBehaviour {
     public GridArray gridmesh;
     public Text debuginfo;
     public Terrain ground;
+    public Camera MainCamera;
     
     //handlers
     public HandHandler handhandler;

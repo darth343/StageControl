@@ -8,6 +8,7 @@ public class GridArray : MonoBehaviour
     public Terrain ground;
     public int GridSizeX = 10;
     public int GridSizeZ = 10;
+    public float GridHyp;
     public bool isGenerated = false;
     public int m_rows;
     public int m_columns;
@@ -18,6 +19,8 @@ public class GridArray : MonoBehaviour
     void Start()
     {
         GenerateGrid();
+        GridHyp = Mathf.Sqrt(GridSizeX * GridSizeX + GridSizeZ * GridSizeZ);
+
     }
 
     // Gets gameobject at position passed in or returns null if there is nothing there
@@ -45,6 +48,43 @@ public class GridArray : MonoBehaviour
         return null;
     }
 
+
+    public Vector3 SnapBuildingPos(Vector3 position , float size)
+    {
+        float offset = (size - 1f);
+        Vector3 maxpos = new Vector3(position.x + (GridSizeX / 2) * offset, position.y, position.z + (GridSizeZ / 2) * offset);
+        GameObject max = GetGridAtPosition(maxpos);
+        Vector3 snaplocation = max.GetComponent<Grid>().GetWorldPosition();
+        snaplocation.z -= (GridSizeZ / 2) * offset;
+        snaplocation.x -= (GridSizeX / 2) * offset;
+        RenderBuildGrids(max, size);
+        max.GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
+        return snaplocation;
+            
+    }
+
+    public void RenderBuildGrids(GameObject max, float size)
+    {
+        Debug.Log("showing grid");
+        float scale = size -1;
+        Vector3 maxpos = max.GetComponent<Grid>().GetWorldPosition();
+        Vector2 mxIndex = GetGridIndexAtPosition(maxpos);
+        Vector2 mnIndex = new Vector2(mxIndex.x - scale, mxIndex.y - scale);
+        //int diffX = index_maxx - (index_minx + 1);
+        //int diffZ = index_maxz - (index_minz + 1);
+        int maxX = (int)mxIndex.x; int minX = (int)mnIndex.x;
+        int maxY = (int)mxIndex.y; int minY = (int)mnIndex.y;
+        for (int i = minX ; i <= maxX; ++i)
+        {
+            for (int j = minY ; j <= maxY; ++j)
+            {
+                Debug.Log("X: " + i + " Y: " + j);
+                gridmesh[i, j].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
+                gridmesh[i, j].GetComponent<Renderer>().enabled = true;
+            }
+        }
+
+    }
     // Takes in a gameobject position and scale and returns which grids it occupies in the form on their grid index x and y
     public Vector2[] GetOccupiedGrids(Vector3 position, Vector3 scale)
     {

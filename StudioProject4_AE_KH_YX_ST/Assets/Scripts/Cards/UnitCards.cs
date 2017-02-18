@@ -29,37 +29,31 @@ public class UnitCards : MonoBehaviour {
         w = GetComponent<RectTransform>().rect.width;
         h = GetComponent<RectTransform>().rect.height;
         SetText();
+        //take this out tlater
         GenerateBuilding();
+        GOModel.SetActive(false);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	}
 
-    void OnHover()
-    {
-        if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() == false)
-        {
-            card = GetComponent<RectTransform>();
-            card.sizeDelta = new Vector2(100, 100);
-            Debug.Log("fuck");
-        }
     
-    }
 
     public void GenerateBuilding()
     {
+        //create a building when drawn
         GOModel = Instantiate(GOModel);
+    }
+
+    public void ConstructBuilding()
+    {
+
     }
 
     public void ResetCardPos()
     {
         SharedData.instance.handhandler.ResetCardPos();
-    }
-
-    void OnHoverExit()
-    {
-
     }
 
     public void SetText()
