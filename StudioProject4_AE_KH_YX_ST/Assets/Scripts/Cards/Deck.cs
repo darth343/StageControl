@@ -33,7 +33,6 @@ public class Deck : MonoBehaviour
         foreach (Deck_Detail detail in CardsToInclude)
         {
             GameObject CardinDatabase = null;
-            Debug.Log("TEST: " + SharedData.instance.CardDatabase.Count);
             SharedData.instance.CardDatabase.TryGetValue(detail.CardType, out CardinDatabase);
             if (CardinDatabase != null)
             {
@@ -41,7 +40,7 @@ public class Deck : MonoBehaviour
                 {
                     GameObject newcard = Instantiate(CardinDatabase);
                     Cards.Add(newcard);
-                    newcard.transform.SetParent(SharedData.instance.UI.transform);
+                    newcard.transform.SetParent(SceneData.sceneData.UI.transform);
                 }
             }
         }
@@ -78,10 +77,10 @@ public class Deck : MonoBehaviour
         if (Cards.Count <= 30 && Cards.Count > 0)
         {
             GameObject firstCard = Cards.ElementAt(0);
-            if (SharedData.instance.handhandler.handsize < 5)
+            if (SceneData.sceneData.handhandler.handsize < 5)
             {
-                SharedData.instance.handhandler.cardlist.Add(firstCard);
-                SharedData.instance.handhandler.ResetCardPos();
+                SceneData.sceneData.handhandler.cardlist.Add(firstCard);
+                SceneData.sceneData.handhandler.ResetCardPos();
                 firstCard.GetComponent<UnitCards>().GenerateBuilding();
                 Cards.Remove(firstCard);
             }
@@ -89,11 +88,11 @@ public class Deck : MonoBehaviour
         
         else if (Cards.Count <= 0)
         {
-            if (SharedData.instance.handhandler.handsize < 5)
+            if (SceneData.sceneData.handhandler.handsize < 5)
             {
                 GameObject NewDeckCard = GameObject.Find("NewDeckCard");
-                SharedData.instance.handhandler.cardlist.Add(NewDeckCard);
-                SharedData.instance.handhandler.ResetCardPos();
+                SceneData.sceneData.handhandler.cardlist.Add(NewDeckCard);
+                SceneData.sceneData.handhandler.ResetCardPos();
             }
         }
     }

@@ -79,7 +79,7 @@ public class CameraController : MonoBehaviour
 
     void OnDrag()
     {
-        if (SharedData.instance.isHoldingCard)
+        if (SceneData.sceneData.isHoldingCard)
             return;
 #if UNITY_ANDROID
         SetCameraPosition(new Vector3(lastcameraposition.x + (lasttouchposition.x - Input.GetTouch(0).position.x) * sensitivityX, lastcameraposition.y, lastcameraposition.z + (lasttouchposition.y - Input.mousePosition.y) * sensitivityY));

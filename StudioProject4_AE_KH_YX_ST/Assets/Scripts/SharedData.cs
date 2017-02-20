@@ -12,24 +12,10 @@ public class Card_Link : System.Object
 
 public class SharedData : MonoBehaviour {
     public static SharedData instance = null;
-    public GridArray gridmesh;
-    public Text debuginfo;
-    public Terrain ground;
-    public Camera MainCamera;
-    public Canvas UI;
-    
-    //handlers
-    public HandHandler handhandler;
-    public DragHandler draghandler;
-    public Instantiation buildhandler;
+
     public List<Card_Link> DatabasePopulater = null;
     public SortedList<CARD_TYPE, GameObject> CardDatabase = new SortedList<CARD_TYPE, GameObject>();
 
-    //Decks
-    public GameObject PlayerDeck = null;
-
-
-    public bool isHoldingCard = false;
 	// Use this for initialization
 	void Start ()
     {
@@ -45,13 +31,16 @@ public class SharedData : MonoBehaviour {
                 CardDatabase.Add(link.type, link.gm);
                 Debug.Log(link.type.ToString() + "  " + CardDatabase.Count);
             }
-
             instance = this;
+
+            if (SceneData.sceneData)
+            {
+                if (SceneData.sceneData.PlayerDeck != null)
+                    SceneData.sceneData.PlayerDeck.GetComponent<Deck>().GenerateDeck();
+            }
+
             if (DatabasePopulater != null)
                 DatabasePopulater.Clear();
-
-            if(PlayerDeck != null)
-            PlayerDeck.GetComponent<Deck>().GenerateDeck();
         }else
         {
             Destroy(gameObject);

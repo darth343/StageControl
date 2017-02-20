@@ -53,7 +53,7 @@ public class UnitCards : MonoBehaviour {
 
     public void ResetCardPos()
     {
-        SharedData.instance.handhandler.ResetCardPos();
+        SceneData.sceneData.handhandler.ResetCardPos();
     }
 
     public void SetText()

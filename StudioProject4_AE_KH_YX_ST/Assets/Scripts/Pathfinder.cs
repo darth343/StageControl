@@ -59,13 +59,13 @@ public class Pathfinder : MonoBehaviour
 
         foreach (Node node in OpenList)
         {
-            Grid tempGrid = SharedData.instance.gridmesh.gridmesh[node.posX, node.posY].GetComponent<Grid>();
+            Grid tempGrid = SceneData.sceneData.gridmesh.gridmesh[node.posX, node.posY].GetComponent<Grid>();
             tempGrid.GetComponent<Grid>().ChangeState(Grid.GRID_STATE.AVAILABLE);
         }
 
         foreach (Node node in VisitedList)
         {
-            Grid tempGrid = SharedData.instance.gridmesh.gridmesh[node.posX, node.posY].GetComponent<Grid>();
+            Grid tempGrid = SceneData.sceneData.gridmesh.gridmesh[node.posX, node.posY].GetComponent<Grid>();
             tempGrid.GetComponent<Grid>().ChangeState(Grid.GRID_STATE.AVAILABLE);
         }
     }
@@ -84,14 +84,14 @@ public class Pathfinder : MonoBehaviour
 
             if (!InitializedStartandGoal && !PathFound)
             {
-                Grid StartGrid = SharedData.instance.gridmesh.GetGridAtPosition(transform.position).GetComponent<Grid>();
-                Grid EndGrid = SharedData.instance.gridmesh.GetGridAtPosition(endposition).GetComponent<Grid>();
-                StartNode.posX = (int)SharedData.instance.gridmesh.GetGridPosition(StartGrid).x;
-                StartNode.posY = (int)SharedData.instance.gridmesh.GetGridPosition(StartGrid).y;
+                Grid StartGrid = SceneData.sceneData.gridmesh.GetGridAtPosition(transform.position).GetComponent<Grid>();
+                Grid EndGrid = SceneData.sceneData.gridmesh.GetGridAtPosition(endposition).GetComponent<Grid>();
+                StartNode.posX = (int)SceneData.sceneData.gridmesh.GetGridPosition(StartGrid).x;
+                StartNode.posY = (int)SceneData.sceneData.gridmesh.GetGridPosition(StartGrid).y;
                 StartNode.G = 0;
                 StartNode.H = StartNode.Distance(EndNode);
-                EndNode.posX = (int)SharedData.instance.gridmesh.GetGridPosition(EndGrid).x;
-                EndNode.posY = (int)SharedData.instance.gridmesh.GetGridPosition(EndGrid).y;
+                EndNode.posX = (int)SceneData.sceneData.gridmesh.GetGridPosition(EndGrid).x;
+                EndNode.posY = (int)SceneData.sceneData.gridmesh.GetGridPosition(EndGrid).y;
                 Debug.Log("END NODE POS: " + EndNode.posX + ", " + EndNode.posY);
                 EndNode.G = EndNode.Distance(StartNode);
                 EndNode.H = 0;
@@ -125,8 +125,8 @@ public class Pathfinder : MonoBehaviour
                 Node getPath;
                 for (getPath = currentNode; getPath != null; getPath = getPath.parent)
                 {
-                    SharedData.instance.gridmesh.gridmesh[getPath.posX, getPath.posY].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.ISPATH);
-                    PathToEnd.Add(new Vector3(getPath.posX * SharedData.instance.gridmesh.GridSizeX, 1, getPath.posY * SharedData.instance.gridmesh.GridSizeZ));
+                    SceneData.sceneData.gridmesh.gridmesh[getPath.posX, getPath.posY].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.ISPATH);
+                    PathToEnd.Add(new Vector3(getPath.posX * SceneData.sceneData.gridmesh.GridSizeX, 1, getPath.posY * SceneData.sceneData.gridmesh.GridSizeZ));
                 }
             }
             else 
@@ -152,16 +152,16 @@ public class Pathfinder : MonoBehaviour
     void 
         OpenNode(int posX, int posY, float newCost, Node parent)
     {
-        if (posX < 0 || posX > SharedData.instance.gridmesh.m_rows - 1|| posY < 0 || posY > SharedData.instance.gridmesh.m_columns - 1)
+        if (posX < 0 || posX > SceneData.sceneData.gridmesh.m_rows - 1|| posY < 0 || posY > SceneData.sceneData.gridmesh.m_columns - 1)
         {
             //Debug.Log("X:" + posX + "Y:" + posY);
             return;
         }
 
-        if (SharedData.instance.gridmesh.gridmesh[posX, posY])
+        if (SceneData.sceneData.gridmesh.gridmesh[posX, posY])
         {
             //Debug.Log("Index X:" + posX + "Index Z: " + posY);
-            if (SharedData.instance.gridmesh.gridmesh[posX, posY].GetComponent<Grid>().state == Grid.GRID_STATE.UNAVAILABLE)
+            if (SceneData.sceneData.gridmesh.gridmesh[posX, posY].GetComponent<Grid>().state == Grid.GRID_STATE.UNAVAILABLE)
             {
                 return;
             }
@@ -204,7 +204,7 @@ public class Pathfinder : MonoBehaviour
                 }
             }
         }
-        Grid tempGrid = SharedData.instance.gridmesh.gridmesh[posX, posY].GetComponent<Grid>();
+        Grid tempGrid = SceneData.sceneData.gridmesh.gridmesh[posX, posY].GetComponent<Grid>();
         tempGrid.GetComponent<Grid>().ChangeState(Grid.GRID_STATE.INOPENLIST);
         OpenList.Add(newNode);
     }
@@ -230,7 +230,7 @@ public class Pathfinder : MonoBehaviour
         if (nextnode != null)
         {
             OpenList.Remove(nextnode);
-            Grid tempGrid = SharedData.instance.gridmesh.gridmesh[nextnode.posX, nextnode.posY].GetComponent<Grid>();
+            Grid tempGrid = SceneData.sceneData.gridmesh.gridmesh[nextnode.posX, nextnode.posY].GetComponent<Grid>();
             tempGrid.GetComponent<Grid>().ChangeState(Grid.GRID_STATE.INCLOSELIST);
             VisitedList.Add(nextnode);
         }
@@ -252,7 +252,7 @@ public class Pathfinder : MonoBehaviour
             {
                 ResetTimer = 0f;
                 EndPos.Set(Random.Range(50, 450), 0, Random.Range(50, 450));
-                while (SharedData.instance.gridmesh.GetGridAtPosition(EndPos).GetComponent<Grid>().state == Grid.GRID_STATE.UNAVAILABLE)
+                while (SceneData.sceneData.gridmesh.GetGridAtPosition(EndPos).GetComponent<Grid>().state == Grid.GRID_STATE.UNAVAILABLE)
                 {
                     EndPos.Set(Random.Range(50, 450), 0, Random.Range(50, 450));
                 }

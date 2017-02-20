@@ -55,7 +55,7 @@ public class Spawn : MonoBehaviour {
                 imgChild.rectTransform.pivot = new Vector2(0f, 0.5f);
                 imgChild.color = Color.green;
                 //spawn.AddComponent<HealthBar>(); // Give it a healthbar
-                Vector2 this_grid = SharedData.instance.gridmesh.GetGridIndexAtPosition(transform.position);
+                Vector2 this_grid = SceneData.sceneData.gridmesh.GetGridIndexAtPosition(transform.position);
                 //SharedData.instance.gridmesh.GetGridAtPosition(transform.position);
          
                 //Debug.Log(transform.position);
@@ -74,8 +74,8 @@ public class Spawn : MonoBehaviour {
                     orientationZ = -1;
                 else
                     orientationZ = 1;
-                Vector3 spawn_pos = SharedData.instance.gridmesh.GetPositionAtGrid((int)this_grid.x + m_offsetGridX * orientationX, (int)this_grid.y + m_offsetGridZ * orientationZ); // is actually the grid this object is on's z position + 30, not y
-                spawn_pos.y = SharedData.instance.gridmesh.GetTerrainHeightAtGrid(spawn_pos);
+                Vector3 spawn_pos = SceneData.sceneData.gridmesh.GetPositionAtGrid((int)this_grid.x + m_offsetGridX * orientationX, (int)this_grid.y + m_offsetGridZ * orientationZ); // is actually the grid this object is on's z position + 30, not y
+                spawn_pos.y = SceneData.sceneData.gridmesh.GetTerrainHeightAtGrid(spawn_pos);
                 spawn.transform.position = spawn_pos;
             }
             m_timer.Reset();

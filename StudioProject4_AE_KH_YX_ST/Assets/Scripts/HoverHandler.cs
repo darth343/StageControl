@@ -53,13 +53,13 @@ public class HoverHandler : MonoBehaviour {
     public void PanelEnter()
     {
         Debug.Log("onpanel");
-        SharedData.instance.handhandler.SetOnplayArea(false);
+        SceneData.sceneData.handhandler.SetOnplayArea(false);
        
     }
 
     public void PanelExit()
       {
           Debug.Log("offpanel");
-          SharedData.instance.handhandler.SetOnplayArea(true);
+          SceneData.sceneData.handhandler.SetOnplayArea(true);
     }
 }

@@ -26,7 +26,7 @@ public class Grid : MonoBehaviour
     {
         if (SharedData.instance == null)
             Debug.Log("Null shared data");
-        Terrain ground = SharedData.instance.ground;
+        Terrain ground = SceneData.sceneData.ground;
         Vector3 minPos = GetWorldPosition() - (new Vector3(gameObject.transform.parent.GetComponent<GridArray>().GridSizeX * 0.5f, 0, gameObject.transform.parent.GetComponent<GridArray>().GridSizeZ * 0.5f));
         Vector3 maxPos = GetWorldPosition() + (new Vector3(gameObject.transform.parent.GetComponent<GridArray>().GridSizeX * 0.5f, 0, gameObject.transform.parent.GetComponent<GridArray>().GridSizeZ * 0.5f));
 
