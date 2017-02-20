@@ -59,8 +59,10 @@ public class GridArray : MonoBehaviour
         snaplocation.z -= (GridSizeZ*0.5f) * offset;
         snaplocation.x -= (GridSizeX*0.5f) * offset;
         RenderBuildGrids(max, size);
-        //max.GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
+       
+        //max.GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);   
         return snaplocation;
+     
             
     }
     public void RenderBuildGrids(GameObject max, float size)
@@ -80,6 +82,7 @@ public class GridArray : MonoBehaviour
             for (int j = minY ; j <= maxY; ++j)
             {
                 gridmesh[i, j].GetComponent<Renderer>().enabled = true;
+         
             }
         }
         //store the min max of rendered gfrids
