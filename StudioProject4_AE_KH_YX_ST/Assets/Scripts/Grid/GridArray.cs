@@ -270,7 +270,7 @@ public class GridArray : MonoBehaviour
                 grid.transform.SetParent(gameObject.transform);
 
                 //disable grid rendering(for actual playtest)
-                grid.GetComponent<Renderer>().enabled = false;
+                //grid.GetComponent<Renderer>().enabled = false;
                 
                 grid.GetComponent<Grid>().position.x = x;
                 grid.GetComponent<Grid>().position.y = z;

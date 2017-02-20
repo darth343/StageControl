@@ -29,7 +29,7 @@ public class SharedData : MonoBehaviour {
             foreach(Card_Link link in DatabasePopulater)
             {
                 CardDatabase.Add(link.type, link.gm);
-                Debug.Log(link.type.ToString() + "  " + CardDatabase.Count);
+                //Debug.Log(link.type.ToString() + "  " + CardDatabase.Count);
             }
             instance = this;
 
