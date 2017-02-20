@@ -16,6 +16,7 @@ public class SharedData : MonoBehaviour {
     public Text debuginfo;
     public Terrain ground;
     public Camera MainCamera;
+    public Canvas UI;
     
     //handlers
     public HandHandler handhandler;
