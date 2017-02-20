@@ -661,6 +661,9 @@ MonoBehaviour:
   buildtime: 0
   spawntime: 0
   size: 4
+  holo: {fileID: 2100000, guid: 7e221768c1e4b514eb022fa6929a3b5e, type: 2}
+  undamage: {fileID: 2100000, guid: c8d4d700d58891a459c0f23c6fa7d9c9, type: 2}
+  damaged: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
