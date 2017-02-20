@@ -292,9 +292,12 @@ MonoBehaviour:
   gridmesh: {fileID: 1601032240}
   debuginfo: {fileID: 1677640607}
   ground: {fileID: 94687701}
+  MainCamera: {fileID: 0}
   handhandler: {fileID: 0}
   draghandler: {fileID: 0}
   buildhandler: {fileID: 0}
+  DatabasePopulater: []
+  PlayerDeck: {fileID: 0}
   isHoldingCard: 0
 --- !u!4 &226730027
 Transform:
@@ -1091,9 +1094,12 @@ MonoBehaviour:
   gridmesh: {fileID: 0}
   debuginfo: {fileID: 1677640607}
   ground: {fileID: 0}
+  MainCamera: {fileID: 0}
   handhandler: {fileID: 0}
   draghandler: {fileID: 0}
   buildhandler: {fileID: 0}
+  DatabasePopulater: []
+  PlayerDeck: {fileID: 0}
   isHoldingCard: 0
 --- !u!4 &1225931143
 Transform:
@@ -1323,6 +1329,45 @@ MonoBehaviour:
   zoomMinLevel: 1
   ground: {fileID: 94687701}
   debugtext: {fileID: 1677640607}
+--- !u!1 &1342434377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1342434379}
+  - 114: {fileID: 1342434378}
+  m_Layer: 0
+  m_Name: SceneData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1342434378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1342434377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70aa31b5eeb7f5a44bca8f24cf47017a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1342434379
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1342434377}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 326.19092, y: 67.98534, z: 235.9655}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
 --- !u!1 &1467020013 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 163518, guid: b40a91bc6bb5c3c4a87e5c8857ae51c6, type: 2}
@@ -1553,6 +1598,7 @@ MonoBehaviour:
   ground: {fileID: 94687701}
   GridSizeX: 20
   GridSizeZ: 20
+  GridHyp: 0
   isGenerated: 0
   m_rows: 50
   m_columns: 50
@@ -1902,6 +1948,33 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e99ee07ed28281742bed5fbf385fccb5, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &1836610552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1836610553}
+  m_Layer: 0
+  m_Name: EntityList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1836610553
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1836610552}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 326.19092, y: 67.98534, z: 235.9655}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
 --- !u!1 &1877863702
 GameObject:
   m_ObjectHideFlags: 0
