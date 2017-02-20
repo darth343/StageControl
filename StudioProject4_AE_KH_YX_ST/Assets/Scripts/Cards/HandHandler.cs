@@ -29,7 +29,8 @@ public class HandHandler : MonoBehaviour {
             odd = true;
         else
             odd = false;
-        maxdegree = 10*(handsize/2);
+
+        maxdegree = 10 * (handsize / 2);
         SetCardPos();
 	}
 	
@@ -86,6 +87,13 @@ public class HandHandler : MonoBehaviour {
 
     public void ResetCardPos()
     {
+        handsize = cardlist.Count;
+        if (handsize % 2 != 0)
+            odd = true;
+        else
+            odd = false;
+
+        maxdegree = 10 * (handsize / 2);
         leftstart = -100 + ((5 - handsize) * 25);
         for (int i = 0; i < cardlist.Count; i++)
         {

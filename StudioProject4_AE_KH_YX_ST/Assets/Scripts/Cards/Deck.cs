@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 [System.Serializable]
 public class Deck_Detail : System.Object
@@ -9,16 +10,18 @@ public class Deck_Detail : System.Object
     public CARD_TYPE CardType;
 }
 
-public class Deck : MonoBehaviour {
+public class Deck : MonoBehaviour
+{
 
     public List<Deck_Detail> CardsToInclude = null;
     public List<GameObject> Cards;
-    
-	// Use this for initialization
-	void Start ()
+    public HandHandler handHandler;
+
+    // Use this for initialization
+    void Start()
     {
 
-	}
+    }
 
     public void GenerateDeck()
     {
@@ -29,14 +32,16 @@ public class Deck : MonoBehaviour {
 
         foreach (Deck_Detail detail in CardsToInclude)
         {
-            GameObject temp = null;
+            GameObject CardinDatabase = null;
             Debug.Log("TEST: " + SharedData.instance.CardDatabase.Count);
-            SharedData.instance.CardDatabase.TryGetValue(detail.CardType, out temp);
-            if (temp != null)
+            SharedData.instance.CardDatabase.TryGetValue(detail.CardType, out CardinDatabase);
+            if (CardinDatabase != null)
             {
                 for (int i = 0; i < detail.CardAmount; ++i)
                 {
-                    Cards.Add(Instantiate(temp));
+                    GameObject newcard = Instantiate(CardinDatabase);
+                    Cards.Add(newcard);
+                    newcard.transform.SetParent(SharedData.instance.UI.transform);
                 }
             }
         }
@@ -44,13 +49,14 @@ public class Deck : MonoBehaviour {
         ShuffleDeck();
 
         if (CardsToInclude != null)
-            CardsToInclude.Clear();   
+            CardsToInclude.Clear();
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
 
     public void ShuffleDeck()
@@ -66,11 +72,27 @@ public class Deck : MonoBehaviour {
         }
     }
 
-    //public void DrawCard()
-    //{
-
-    //    var firstCard = Cards.GetEnumerator().Current;
-    //    //var lastCard = Cards.;
-
-    //}
+    public void DrawCard()
+    {
+        if (Cards.Count <= 30 && Cards.Count > 0)
+        {
+            GameObject firstCard = Cards.ElementAt(0);
+            if (SharedData.instance.handhandler.handsize < 5)
+            {
+                SharedData.instance.handhandler.cardlist.Add(firstCard);
+                SharedData.instance.handhandler.ResetCardPos();
+                Cards.Remove(firstCard);
+            }
+        }
+        
+        else if (Cards.Count <= 0)
+        {
+            if (SharedData.instance.handhandler.handsize < 5)
+            {
+                GameObject NewDeckCard = GameObject.Find("NewDeckCard");
+                SharedData.instance.handhandler.cardlist.Add(NewDeckCard);
+                SharedData.instance.handhandler.ResetCardPos();
+            }
+        }
+    }
 }
