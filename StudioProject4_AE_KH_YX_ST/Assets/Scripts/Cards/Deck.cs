@@ -74,6 +74,7 @@ public class Deck : MonoBehaviour
 
     public void DrawCard()
     {
+        
         if (Cards.Count <= 30 && Cards.Count > 0)
         {
             GameObject firstCard = Cards.ElementAt(0);
@@ -81,6 +82,7 @@ public class Deck : MonoBehaviour
             {
                 SharedData.instance.handhandler.cardlist.Add(firstCard);
                 SharedData.instance.handhandler.ResetCardPos();
+                firstCard.GetComponent<UnitCards>().GenerateBuilding();
                 Cards.Remove(firstCard);
             }
         }

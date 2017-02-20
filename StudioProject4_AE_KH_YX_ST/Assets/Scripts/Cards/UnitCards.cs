@@ -31,7 +31,6 @@ public class UnitCards : MonoBehaviour {
         h = GetComponent<RectTransform>().rect.height;
         SetText();
         //take this out tlater
-        GenerateBuilding();
         GOModel.SetActive(false);
 	}
 	
