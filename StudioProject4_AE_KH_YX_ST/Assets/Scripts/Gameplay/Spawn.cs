@@ -75,7 +75,7 @@ public class Spawn : MonoBehaviour {
                 else
                     orientationZ = 1;
                 Vector3 spawn_pos = SharedData.instance.gridmesh.GetPositionAtGrid((int)this_grid.x + m_offsetGridX * orientationX, (int)this_grid.y + m_offsetGridZ * orientationZ); // is actually the grid this object is on's z position + 30, not y
-                spawn_pos.y = SharedData.instance.gridmesh.GetTerrainHeightAtGrid(spawn_pos) + 15;
+                spawn_pos.y = SharedData.instance.gridmesh.GetTerrainHeightAtGrid(spawn_pos);
                 spawn.transform.position = spawn_pos;
             }
             m_timer.Reset();
