@@ -94,6 +94,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: faee7e3af3601c24dbaa2412de7aa8ce, type: 2}
   - {fileID: 2100000, guid: c86af6f423959e24588607dc1bffc001, type: 2}
   position: {x: 0, y: 0}
+  Points:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   state: 0
 --- !u!1001 &100100000
 Prefab:

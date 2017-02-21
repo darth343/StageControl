@@ -15,6 +15,7 @@ public class Grid : MonoBehaviour
 
     public Material[] materials = new Material[5];
     public Vector2 position;
+    public Vector3[] Points = new Vector3[5];
     public GRID_STATE state;
 
     public Vector3 GetWorldPosition()
@@ -50,34 +51,35 @@ public class Grid : MonoBehaviour
 
     public void UpdateAvailability()
     {
+        return;
        switch(state)
        {
-           case GRID_STATE.AVAILABLE:
-        {
-            GetComponent<Renderer>().material = materials[0];
+               case GRID_STATE.AVAILABLE:
+            {
+                GetComponent<LineRenderer>().material = materials[0];
+            }
+            break;
+               case GRID_STATE.UNAVAILABLE:
+            {
+                GetComponent<LineRenderer>().material = materials[1];
+            }
+            break;
+               case GRID_STATE.ISPATH:
+            {
+                GetComponent<LineRenderer>().material = materials[2];
+            }
+            break;
+               case GRID_STATE.INOPENLIST:
+            {
+                GetComponent<LineRenderer>().material = materials[3];
+            }
+            break;
+               case GRID_STATE.INCLOSELIST:
+            {
+                GetComponent<LineRenderer>().material = materials[4];
+            }
+            break;
         }
-        break;
-           case GRID_STATE.UNAVAILABLE:
-        {
-            GetComponent<Renderer>().material = materials[1];
-        }
-        break;
-           case GRID_STATE.ISPATH:
-        {
-            GetComponent<Renderer>().material = materials[2];
-        }
-        break;
-           case GRID_STATE.INOPENLIST:
-        {
-            GetComponent<Renderer>().material = materials[3];
-        }
-        break;
-           case GRID_STATE.INCLOSELIST:
-        {
-            GetComponent<Renderer>().material = materials[4];
-        }
-        break;
-    }
     }
 
     public void Select()

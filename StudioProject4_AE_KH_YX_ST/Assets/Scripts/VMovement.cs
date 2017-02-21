@@ -5,6 +5,7 @@ public class VMovement : MonoBehaviour
 {
     Vector3 Goal;
     public Vector3 Velocity;
+    public float speed = 10f;
     
 	// Use this for initialization
 	void Start () 
@@ -13,7 +14,8 @@ public class VMovement : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update ()
+    {
+        gameObject.transform.position += gameObject.GetComponent<VMovement>().Velocity.normalized * Time.deltaTime * speed;
 	}
 }
