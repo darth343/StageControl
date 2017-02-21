@@ -25,6 +25,9 @@ public class SceneData : MonoBehaviour
     public float SeperationWeight = 1f;
     public float AlignmentWeight = 1f;
 
+    //Particles
+    public ParticleSystem buildingP;
+
     void Start()
     {
         sceneData = this;

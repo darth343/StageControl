@@ -16,13 +16,15 @@ public class Building : MonoBehaviour {
     public Material holo,undamaged,damaged;
     public BUILDSTATE b_state;
     public bool isfriendly;
+    float timerB = 0.0f;
+    ParticleSystem buildingTemp;
+    public float buildTimer;
 	// Use this for initialization
 	void Start () {
         //b_state = BUILDSTATE.B_HOLOGRAM;
-        
-        
+
+        buildingTemp = Instantiate(SceneData.sceneData.buildingP);
         isfriendly = true;//default to the player's units
-	
 	}
 	
 	// Update is called once per frame
@@ -39,10 +41,27 @@ public class Building : MonoBehaviour {
 
                 break;
             case BUILDSTATE.B_CONSTRUCT:
-                for (int i = 0; i < gameObject.transform.GetChild(0).childCount; ++i)
-                {
-                    gameObject.transform.GetChild(0).transform.GetChild(i).GetComponent<MeshRenderer>().material = undamaged;
-                }
+                    timerB += Time.deltaTime;
+                    if (timerB < buildTimer)
+                    {
+                        buildingTemp.Play();
+                        buildingTemp.transform.position = gameObject.transform.position;
+                        for (int i = 0; i < gameObject.transform.GetChild(0).childCount; ++i)
+                        {
+                            gameObject.transform.GetChild(0).transform.GetChild(i).GetComponent<MeshRenderer>().material = holo;
+                        }
+                    }
+                    else if (timerB >= buildTimer)
+                    {
+                        buildingTemp.Stop();
+                        buildingTemp.transform.position = gameObject.transform.position;
+                        for (int i = 0; i < gameObject.transform.GetChild(0).childCount; ++i)
+                        {
+                            gameObject.transform.GetChild(0).transform.GetChild(i).GetComponent<MeshRenderer>().material = undamaged;
+                        }
+                        b_state = BUILDSTATE.B_ACTIVE;
+                        Destroy(buildingTemp);
+                    }
                 break;
             case BUILDSTATE.B_ACTIVE:
                 for (int i = 0; i < gameObject.transform.GetChild(0).childCount; ++i)
