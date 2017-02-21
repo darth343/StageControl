@@ -32,6 +32,7 @@ public class Grid : MonoBehaviour
 
         if (0.05 < ground.SampleHeight(minPos) &&  0.05 < ground.SampleHeight(maxPos))
         {
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x,ground.SampleHeight(maxPos)+0.1f, gameObject.transform.position.z);
             return GRID_STATE.UNAVAILABLE;
         }
         return GRID_STATE.AVAILABLE;
