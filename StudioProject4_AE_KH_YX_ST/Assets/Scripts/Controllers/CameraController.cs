@@ -19,10 +19,8 @@ public class CameraController : MonoBehaviour
     float defaultCameraDistanceFromTerrain;
     public Terrain ground;
     Vector3 lasttouchposition;
-    Vector3 lastcameraposition;
     public Text debugtext;
     Vector3 newCameraPos = new Vector3();
-    Vector3 movementDelta = new Vector3();
     void SetCameraPosition(Vector3 newPosition)
     {
         GetComponent<Camera>().transform.position = newPosition;
@@ -60,7 +58,6 @@ public class CameraController : MonoBehaviour
         lasttouchposition = Input.GetTouch(0).position;
         FingerDown = true;
 #else
-        lastcameraposition = GetComponent<Camera>().transform.position;
         lasttouchposition = Input.mousePosition;
         LeftMouseDown = true;
 #endif
