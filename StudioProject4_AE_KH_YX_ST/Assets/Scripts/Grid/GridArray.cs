@@ -187,18 +187,10 @@ public class GridArray : MonoBehaviour
     }
 
     // Used to highlight a grid that unit is standing on
-    public void HighlightUnitPosition(ArrayList list)
+    public void HighlightUnitPosition(Vector2 index)
     {
-        Vector2 index;
-        for (int i = 0; i < list.Count; ++i)
-        {
-            index = (Vector2)list[i];
-            if (index.x >= 0 && index.x <= m_rows && index.y >= 0 && index.y <= m_columns)
-            {
-                gridmesh[(int)index.x, (int)index.y].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
-                gridmesh[(int)index.x, (int)index.y].GetComponent<Renderer>().enabled = true;
-            }
-        }
+        gridmesh[(int)index.x, (int)index.y].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
+        gridmesh[(int)index.x, (int)index.y].GetComponent<Renderer>().enabled = true;
     }
 
     public Vector3 GetGridPosition(Grid grid)
