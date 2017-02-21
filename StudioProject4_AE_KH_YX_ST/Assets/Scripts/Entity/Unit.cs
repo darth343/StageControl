@@ -24,6 +24,8 @@ public class Unit : MonoBehaviour {
     private AnimationClip m_attkAnim; // The attack animation
     private Timer m_timer;
     Component[] m_destroyerOfWorlds; // Stores and destroys all the components of an object
+    public List<Vector3> PathToEnd = null;
+    private int pathindex = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -60,7 +62,11 @@ public class Unit : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-
+        //
+        //
+        // PUT ATTACK STUFF IN A FUNCTION INSTEAD OF FLOODING UPDATE
+        //
+        //
         if (GetComponent<Health>().GetHealth() < 0)
         {
             RemoveEntity(this.gameObject);
@@ -117,6 +123,22 @@ public class Unit : MonoBehaviour {
                 {
                     m_animator.SetBool("b_attack", false);
                     m_switchAnimation = false;
+                }
+            }
+        }
+
+        if (GetComponent<Flocking>().isleader)
+        {
+            if (PathToEnd.Count > 0)
+            {
+                GetComponent<VMovement>().Velocity = (PathToEnd[pathindex] - transform.position).normalized;
+                if ((PathToEnd[pathindex] - transform.position).sqrMagnitude < 10 * 10)
+                {
+                    ++pathindex;
+                    if (pathindex >= PathToEnd.Count)
+                    {
+                        PathToEnd.Clear();
+                    }
                 }
             }
         }

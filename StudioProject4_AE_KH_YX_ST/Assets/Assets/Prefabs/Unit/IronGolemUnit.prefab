@@ -129,6 +129,8 @@ GameObject:
   - 114: {fileID: 11420842}
   - 114: {fileID: 11488782}
   - 114: {fileID: 11443114}
+  - 114: {fileID: 11449950}
+  - 114: {fileID: 11407088}
   m_Layer: 0
   m_Name: IronGolemUnit
   m_TagString: Untagged
@@ -643,6 +645,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11407088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14a6bd85ac2760b458a66598123fd8bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Velocity: {x: 0, y: 0, z: 0}
+  speed: 10
 --- !u!114 &11420842
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -666,7 +681,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f9410bef31ae534f8061d7e8ed6ff4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 112530}
+  m_attkRadius: 0
+  PathToEnd: []
+--- !u!114 &11449950
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df341e5855f818b4d9386618a03803c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NeighborRadius: 50
+  SeperationOffset: 800
+  FlockingList: []
+  leader: {fileID: 0}
+  isleader: 1
 --- !u!114 &11488782
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -678,7 +710,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d49d1418f81a0a4fa1b07cf8de5ae69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_childIndex: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

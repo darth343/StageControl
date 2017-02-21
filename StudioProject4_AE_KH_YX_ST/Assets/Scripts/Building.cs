@@ -17,16 +17,27 @@ public class Building : MonoBehaviour {
     public BUILDSTATE b_state;
     public bool isfriendly;
     float timerB = 0.0f;
-    ParticleSystem buildingTemp;
+    ParticleSystem buildingTemp = null;
     public float buildTimer;
 	// Use this for initialization
 	void Start () {
         //b_state = BUILDSTATE.B_HOLOGRAM;
 
-        buildingTemp = Instantiate(SceneData.sceneData.buildingP);
+        Invoke("InstantiateParticles", 0.1f);
         isfriendly = true;//default to the player's units
 	}
-	
+
+    void InstantiateParticles()
+    {
+        buildingTemp = Instantiate(SceneData.sceneData.buildingP);
+    }
+
+    Vector3 GetMaxPosOfBuilding(Vector3 position, int othersize)
+    {
+        Vector3 maxpos = position + new Vector3(SceneData.sceneData.gridmesh.GridSizeX * (othersize - 1), 0, SceneData.sceneData.gridmesh.GridSizeX * (othersize - 1));
+        return maxpos;
+    }
+
 	// Update is called once per frame
 	void Update () {
 
@@ -44,23 +55,29 @@ public class Building : MonoBehaviour {
                     timerB += Time.deltaTime;
                     if (timerB < buildTimer)
                     {
-                        buildingTemp.Play();
-                        buildingTemp.transform.position = gameObject.transform.position;
-                        for (int i = 0; i < gameObject.transform.GetChild(0).childCount; ++i)
+                        if (buildingTemp)
                         {
-                            gameObject.transform.GetChild(0).transform.GetChild(i).GetComponent<MeshRenderer>().material = holo;
+                            buildingTemp.Play();
+                            buildingTemp.transform.position = gameObject.transform.position;
+                            for (int i = 0; i < gameObject.transform.GetChild(0).childCount; ++i)
+                            {
+                                gameObject.transform.GetChild(0).transform.GetChild(i).GetComponent<MeshRenderer>().material = holo;
+                            }
                         }
                     }
                     else if (timerB >= buildTimer)
                     {
-                        buildingTemp.Stop();
-                        buildingTemp.transform.position = gameObject.transform.position;
-                        for (int i = 0; i < gameObject.transform.GetChild(0).childCount; ++i)
+                        if (buildingTemp)
                         {
-                            gameObject.transform.GetChild(0).transform.GetChild(i).GetComponent<MeshRenderer>().material = undamaged;
+                            buildingTemp.Stop();
+                            buildingTemp.transform.position = gameObject.transform.position;
+                            for (int i = 0; i < gameObject.transform.GetChild(0).childCount; ++i)
+                            {
+                                gameObject.transform.GetChild(0).transform.GetChild(i).GetComponent<MeshRenderer>().material = undamaged;
+                            }
+                            b_state = BUILDSTATE.B_ACTIVE;
+                            Destroy(buildingTemp);
                         }
-                        b_state = BUILDSTATE.B_ACTIVE;
-                        Destroy(buildingTemp);
                     }
                 break;
             case BUILDSTATE.B_ACTIVE:
@@ -69,6 +86,10 @@ public class Building : MonoBehaviour {
                     gameObject.transform.GetChild(0).transform.GetChild(i).GetComponent<MeshRenderer>().material = undamaged;
                 }
 
+                if (isfriendly && GetComponent<Pathfinder>())
+                {
+                    GetComponent<Pathfinder>().FindPath(GetMaxPosOfBuilding(LevelManager.instance.EnemyBase.transform.position, LevelManager.instance.EnemyBase.GetComponent<Building>().size));
+                }
 
                 break;
 

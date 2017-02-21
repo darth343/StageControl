@@ -40,10 +40,14 @@ public class SceneData : MonoBehaviour
         }
     }
 
-
-    void Start()
+    void Awake()
     {
         sceneData = this;
         Invoke("SnapBasesToGrid", 1);
+    }
+
+    void Start()
+    {
+
     }
 }

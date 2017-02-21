@@ -8,7 +8,8 @@ public class Spawn : MonoBehaviour {
     public float m_secondsToSpawn;
     private Timer m_timer;
     // The controller that the spawned entity belongs to like EnemyController
-    public GameObject m_controller;
+    private static GameObject m_controller;
+    private static bool m_initController = false;
     // The entity that the building spawns
     public GameObject m_entity;
     // Which direction away from building does user want to spawn units? left, right, up, down
@@ -20,19 +21,33 @@ public class Spawn : MonoBehaviour {
     // How many to spawn in a flock
     public int m_spawnAmt;
     // All the spawned entities are put into this list
-    public static List<GameObject> m_entityList; 
+    public static List<GameObject> m_entityList;
+    // The building of the spawner
+    private Building m_building;
 
 	void Start () {
         m_timer = this.gameObject.AddComponent<Timer>();
         m_timer.Init(0, m_secondsToSpawn, 0);
         m_entityList = new List<GameObject>();
+        m_building = GetComponent<Building>();
+        if (m_initController == false)
+        {
+            m_controller = new GameObject();
+            m_controller.name = "UnitController";
+            GameObject temp = new GameObject();
+            Canvas temp_canvas = temp.AddComponent<Canvas>();
+            temp_canvas.transform.SetParent(m_controller.transform);
+            temp_canvas.renderMode = RenderMode.WorldSpace;
+            m_initController = true;
+        }
+        //temp.worldCamera = 
         //SharedData.instance.gridmesh.GetOccupiedGrids(transform.position, transform.localScale);
 	}
 
 	void Update () {
         m_timer.Update();
         //SharedData.instance.gridmesh.RenderBuildGrids(transform.position, transform.localScale);
-        if (m_timer.can_run && m_spawnAmt > 0)
+        if (m_timer.can_run && m_spawnAmt > 0 && m_building.b_state == Building.BUILDSTATE.B_ACTIVE && GetComponent<Pathfinder>().PathFound)
         {
             GameObject spawn;
             for (int i = 0; i < m_spawnAmt; ++i)
@@ -40,6 +55,7 @@ public class Spawn : MonoBehaviour {
                 spawn = (GameObject)Instantiate(m_entity); // Create a copy of the original "hell"spawn
                 spawn.transform.SetParent(m_controller.transform);
                 spawn.GetComponent<Health>().MAX_HEALTH = 100;
+                spawn.GetComponent<Unit>().PathToEnd = GetComponent<Pathfinder>().PathToEnd;
                 GameObject handle, handleChild;
                 handle  = new GameObject();
                 handleChild = new GameObject();

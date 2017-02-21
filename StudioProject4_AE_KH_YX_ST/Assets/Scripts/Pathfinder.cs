@@ -31,12 +31,12 @@ public class Pathfinder : MonoBehaviour
 {
     List<Node> OpenList = new List<Node>();
     List<Node> VisitedList = new List<Node>();
-    List<Vector3> PathToEnd = new List<Vector3>();
     bool InitializedStartandGoal = false;
     Node StartNode = new Node();
     Node EndNode = new Node();
 
     public bool PathFound = true;
+    public List<Vector3> PathToEnd = new List<Vector3>();
     //public Vector3 StartPos = new Vector3();
     public Vector3 EndPos = new Vector3();
 
@@ -240,9 +240,5 @@ public class Pathfinder : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (!PathFound)
-        {
-            FindPath(EndPos);
-        }
 	}
 }

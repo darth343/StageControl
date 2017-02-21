@@ -969,7 +969,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_secondsToSpawn: 10
-  m_controller: {fileID: 0}
   m_entity: {fileID: 131550, guid: b72ee064e4655ea4ab0169063befdd46, type: 2}
   m_orientationX: right
   m_orientationZ: up
@@ -990,6 +989,12 @@ MonoBehaviour:
   buildtime: 0
   spawntime: 0
   size: 2
+  holo: {fileID: 2100000, guid: 7e221768c1e4b514eb022fa6929a3b5e, type: 2}
+  undamaged: {fileID: 2100000, guid: 9241aa8f6241bfb43b0f319bc06f291b, type: 2}
+  damaged: {fileID: 2100000, guid: 9241aa8f6241bfb43b0f319bc06f291b, type: 2}
+  b_state: 0
+  isfriendly: 1
+  buildTimer: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
