@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Spawn : MonoBehaviour {
     // How many seconds before next spawn
@@ -18,10 +19,13 @@ public class Spawn : MonoBehaviour {
     public int m_offsetGridZ;
     // How many to spawn in a flock
     public int m_spawnAmt;
+    // All the spawned entities are put into this list
+    public static List<GameObject> m_entityList; 
 
 	void Start () {
         m_timer = this.gameObject.AddComponent<Timer>();
         m_timer.Init(0, m_secondsToSpawn, 0);
+        m_entityList = new List<GameObject>();
         //SharedData.instance.gridmesh.GetOccupiedGrids(transform.position, transform.localScale);
 	}
 
@@ -35,8 +39,7 @@ public class Spawn : MonoBehaviour {
             {
                 spawn = (GameObject)Instantiate(m_entity); // Create a copy of the original "hell"spawn
                 spawn.transform.SetParent(m_controller.transform);
-                spawn.GetComponent<Health>().MAX_HEALTH = 75;
-                spawn.GetComponent<HealthBar>().m_childIndex = i; // i+1 if there's already one entity in the scene
+                spawn.GetComponent<Health>().MAX_HEALTH = 100;
                 GameObject handle, handleChild;
                 handle  = new GameObject();
                 handleChild = new GameObject();
@@ -77,9 +80,10 @@ public class Spawn : MonoBehaviour {
                 Vector3 spawn_pos = SceneData.sceneData.gridmesh.GetPositionAtGrid((int)this_grid.x + m_offsetGridX * orientationX, (int)this_grid.y + m_offsetGridZ * orientationZ); // is actually the grid this object is on's z position + 30, not y
                 spawn_pos.y = SceneData.sceneData.gridmesh.GetTerrainHeightAtGrid(spawn_pos);
                 spawn.transform.position = spawn_pos;
+                m_entityList.Add(spawn);
             }
             m_timer.Reset();
-            m_spawnAmt = 0;
+            m_spawnAmt = 0; // Take away this to make it spawn repeatedly
         }
 	}
 }
