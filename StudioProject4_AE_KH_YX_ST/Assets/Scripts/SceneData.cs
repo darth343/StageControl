@@ -25,6 +25,10 @@ public class SceneData : MonoBehaviour
     public float SeperationWeight = 1f;
     public float AlignmentWeight = 1f;
 
+
+    //Particles
+    public ParticleSystem buildingP;
+
     void SnapBasesToGrid()
     {
         if (LevelManager.instance)
@@ -35,6 +39,7 @@ public class SceneData : MonoBehaviour
             SceneData.sceneData.gridmesh.DerenderBuildGrids(true);      
         }
     }
+
 
     void Start()
     {
