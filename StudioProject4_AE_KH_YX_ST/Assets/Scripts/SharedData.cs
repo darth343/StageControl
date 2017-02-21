@@ -41,6 +41,7 @@ public class SharedData : MonoBehaviour {
 
             if (DatabasePopulater != null)
                 DatabasePopulater.Clear();
+
         }else
         {
             Destroy(gameObject);

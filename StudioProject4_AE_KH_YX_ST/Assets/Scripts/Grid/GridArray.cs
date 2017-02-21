@@ -228,6 +228,13 @@ public class GridArray : MonoBehaviour
         return Vector2.zero;
     }
 
+    // Used to highlight a grid that unit is standing on
+    public void HighlightUnitPosition(Vector2 index)
+    {
+        gridmesh[(int)index.x, (int)index.y].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
+        gridmesh[(int)index.x, (int)index.y].GetComponent<Grid>().EnableRendering(false);
+    }
+
     // Gets position from supplied grid coordinates
     public Vector3 GetPositionAtGrid(int gridx_, int gridz_)
     {
@@ -254,30 +261,61 @@ public class GridArray : MonoBehaviour
             }
                 return;
         }
+
+
         m_rows = (int)ground.terrainData.size.x / GridSizeX;
         m_columns = (int)ground.terrainData.size.z / GridSizeZ;
         gridmesh = new GameObject[m_rows, m_columns];
+
+        float halfGridSizeX = GridSizeX * 0.5f;
+        float halfGridSizeZ = GridSizeZ * 0.5f;
+
         // Create rows
         for (int x = 0; x < m_rows; x++)
-        { // Create columns
+        { 
+             // Create columns
             for (int z = 0; z < m_columns; z++)
             {
-                // Create a copy of the plane and offset it according to [current width, current column] using Instantiate
                 GameObject grid = (GameObject)Instantiate(StartingGrid);
                 grid.name = "Row: " + x + " Col: " + z;
-                grid.transform.position = new Vector3(x * GridSizeX + GridSizeX * 0.5f, 0.8f, z * GridSizeZ + GridSizeZ * 0.5f);
-                grid.transform.localScale = new Vector3(GridSizeX, GridSizeZ, 1);
-                grid.transform.SetParent(gameObject.transform);
-
-                //disable grid rendering(for actual playtest)
-                //grid.GetComponent<Renderer>().enabled = false;
-                
                 grid.GetComponent<Grid>().position.x = x;
                 grid.GetComponent<Grid>().position.y = z;
-				grid.GetComponent<Grid> ().state = grid.GetComponent<Grid>().CollidedWithTerrain();
-                grid.GetComponent<Grid>().UpdateAvailability();
-                //, new Vector3(m_startingPlane.transform.position.x + x, m_startingPlane.transform.position.y, m_startingPlane.transform.position.z + z), m_startingPlane.transform.rotation);
+                float worldpositionX = x * GridSizeX + GridSizeX * 0.5f;
+                float worldpositionZ = z * GridSizeZ + GridSizeZ * 0.5f;
+                grid.transform.position = new Vector3(worldpositionX, ground.terrainData.GetInterpolatedHeight(worldpositionX / ground.terrainData.size.x, worldpositionZ / ground.terrainData.size.z) + 1, worldpositionZ);
+                grid.GetComponent<Grid>().Points[0] = new Vector3(-halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(-halfGridSizeX + grid.transform.position.x, 0, -halfGridSizeZ + grid.transform.position.z)), -halfGridSizeZ + grid.transform.position.z);
+                grid.GetComponent<Grid>().Points[1] = new Vector3(halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(halfGridSizeX + grid.transform.position.x, 0, -halfGridSizeZ + grid.transform.position.z)), -halfGridSizeZ + grid.transform.position.z);
+                grid.GetComponent<Grid>().Points[2] = new Vector3(halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(halfGridSizeX + grid.transform.position.x, 0, halfGridSizeZ + grid.transform.position.z)), halfGridSizeZ + grid.transform.position.z);
+                grid.GetComponent<Grid>().Points[3] = new Vector3(-halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(-halfGridSizeX + grid.transform.position.x, 0, halfGridSizeZ + grid.transform.position.z)), halfGridSizeZ + grid.transform.position.z);
+                grid.GetComponent<Grid>().Points[4] = new Vector3(-halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(-halfGridSizeX + grid.transform.position.x, 0, -halfGridSizeZ + grid.transform.position.z)), -halfGridSizeZ + grid.transform.position.z);
+                grid.GetComponent<LineRenderer>().SetVertexCount(5);
+                grid.GetComponent<LineRenderer>().SetPositions(grid.GetComponent<Grid>().Points);
+                grid.GetComponent<LineRenderer>().SetWidth(3, 3);
+                grid.GetComponent<LineRenderer>().material.color = Color.green;
+                grid.transform.SetParent(gameObject.transform);
                 gridmesh[x, z] = grid;
+
+                //grid.GetComponent<Renderer>().enabled = false;
+        //        // Create a copy of the plane and offset it according to [current width, current column] using Instantiate
+        //        GameObject grid = (GameObject)Instantiate(StartingGrid);
+        //        grid.name = "Row: " + x + " Col: " + z;
+        //        float worldpositionX = x * GridSizeX + GridSizeX * 0.5f;
+        //        float worldpositionZ = z * GridSizeZ + GridSizeZ * 0.5f;
+        //        grid.transform.position = new Vector3(worldpositionX, ground.terrainData.GetInterpolatedHeight(worldpositionX / ground.terrainData.size.x, worldpositionZ / ground.terrainData.size.z) + 1, worldpositionZ);
+        //        grid.transform.localScale = new Vector3(GridSizeX, GridSizeZ, 1);
+        //        grid.transform.SetParent(gameObject.transform);
+
+        //        //disable grid rendering(for actual playtest)
+        //        //grid.GetComponent<Renderer>().enabled = false;
+        //        Vector3 terrainNormal = ground.terrainData.GetInterpolatedNormal(worldpositionX / ground.terrainData.size.x, worldpositionZ / ground.terrainData.size.z);
+        //        grid.GetComponent<Grid>().position.x = x;
+        //        grid.GetComponent<Grid>().position.y = z;
+        //        grid.transform.rotation = Quaternion.FromToRotation(Vector3.up, terrainNormal); // ((ground.terrainData.GetInterpolatedNormal(worldpositionX / ground.terrainData.size.x, worldpositionZ / ground.terrainData.size.z)));
+        //        grid.transform.Rotate(new Vector3(1, 0, 0), 90);
+        //        grid.GetComponent<Grid> ().state = grid.GetComponent<Grid>().CollidedWithTerrain();
+        //        grid.GetComponent<Grid>().UpdateAvailability();
+        //        //, new Vector3(m_startingPlane.transform.position.x + x, m_startingPlane.transform.position.y, m_startingPlane.transform.position.z + z), m_startingPlane.transform.rotation);
+        //        gridmesh[x, z] = grid;
             }
         }
     }

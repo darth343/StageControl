@@ -465,7 +465,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d49d1418f81a0a4fa1b07cf8de5ae69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_childIndex: 0
 --- !u!114 &11434802
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -477,9 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f9410bef31ae534f8061d7e8ed6ff4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 195562}
-  m_attkRadius: 0
-  m_attkDist: 0
+  m_attkRadius: 1
 --- !u!114 &11497088
 MonoBehaviour:
   m_ObjectHideFlags: 1
