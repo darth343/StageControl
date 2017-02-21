@@ -40,8 +40,6 @@ public class Pathfinder : MonoBehaviour
     //public Vector3 StartPos = new Vector3();
     public Vector3 EndPos = new Vector3();
 
-    float ResetTimer = 0f;
-
 	// Use this for initialization
 	void Start ()
     {
@@ -245,23 +243,6 @@ public class Pathfinder : MonoBehaviour
         if (!PathFound)
         {
             FindPath(EndPos);
-        }
-        else 
-        {
-            if (ResetTimer > 3f)
-            {
-                ResetTimer = 0f;
-                EndPos.Set(Random.Range(50, 450), 0, Random.Range(50, 450));
-                while (SceneData.sceneData.gridmesh.GetGridAtPosition(EndPos).GetComponent<Grid>().state == Grid.GRID_STATE.UNAVAILABLE)
-                {
-                    EndPos.Set(Random.Range(50, 450), 0, Random.Range(50, 450));
-                }
-                Reset();
-            }
-            else 
-            {
-                ResetTimer += Time.deltaTime;
-            }
         }
 	}
 }

@@ -228,6 +228,13 @@ public class GridArray : MonoBehaviour
         return Vector2.zero;
     }
 
+    // Used to highlight a grid that unit is standing on
+    public void HighlightUnitPosition(Vector2 index)
+    {
+        gridmesh[(int)index.x, (int)index.y].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
+        gridmesh[(int)index.x, (int)index.y].GetComponent<Grid>().EnableRendering(false);
+    }
+
     // Gets position from supplied grid coordinates
     public Vector3 GetPositionAtGrid(int gridx_, int gridz_)
     {
@@ -288,7 +295,7 @@ public class GridArray : MonoBehaviour
                 grid.transform.SetParent(gameObject.transform);
                 gridmesh[x, z] = grid;
 
-                grid.GetComponent<Renderer>().enabled = false;
+                //grid.GetComponent<Renderer>().enabled = false;
         //        // Create a copy of the plane and offset it according to [current width, current column] using Instantiate
         //        GameObject grid = (GameObject)Instantiate(StartingGrid);
         //        grid.name = "Row: " + x + " Col: " + z;

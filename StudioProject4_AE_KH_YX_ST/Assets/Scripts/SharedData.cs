@@ -29,7 +29,7 @@ public class SharedData : MonoBehaviour {
             foreach(Card_Link link in DatabasePopulater)
             {
                 CardDatabase.Add(link.type, link.gm);
-                Debug.Log(link.type.ToString() + "  " + CardDatabase.Count);
+                //Debug.Log(link.type.ToString() + "  " + CardDatabase.Count);
             }
             instance = this;
 
@@ -41,6 +41,7 @@ public class SharedData : MonoBehaviour {
 
             if (DatabasePopulater != null)
                 DatabasePopulater.Clear();
+
         }else
         {
             Destroy(gameObject);
