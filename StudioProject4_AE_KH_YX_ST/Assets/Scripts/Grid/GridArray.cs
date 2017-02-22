@@ -15,6 +15,7 @@ public class GridArray : MonoBehaviour
     public GameObject[,] gridmesh;
     public Text debugtext;
     public Vector2 tempmax, tempmin;
+    public float SlopeLeniency = 3;
 
     // Use this for initialization
     void Start()
@@ -29,16 +30,6 @@ public class GridArray : MonoBehaviour
     {
         int index_x = (int)(position.x - GridSizeX * 0.5f) / GridSizeX;
         int index_z = (int)(position.z - GridSizeZ * 0.5f) / GridSizeZ;
-
-        if (index_x < 0 || index_x >= 50)
-        {
-            int a = 0;
-        }
-
-        if (index_z < 0 || index_z >= 50)
-        {
-            int a = 0;
-        }
 
         if (index_x >= 0 && index_x <= m_rows &&
             index_z >= 0 && index_z <= m_columns)
@@ -70,7 +61,7 @@ public class GridArray : MonoBehaviour
         //Debug.Log("showing grid");
         DerenderBuildGrids(false);
         float scale = size -1;
-        Vector3 maxpos = max.GetComponent<Grid>().GetWorldPosition();
+        //Vector3 maxpos = max.GetComponent<Grid>().GetWorldPosition();
         Vector2 mxIndex = new Vector2(max.GetComponent<Grid>().position.x, max.GetComponent<Grid>().position.y);
         Vector2 mnIndex = new Vector2(mxIndex.x - scale, mxIndex.y - scale);
         //int diffX = index_maxx - (index_minx + 1);
@@ -187,18 +178,10 @@ public class GridArray : MonoBehaviour
     }
 
     // Used to highlight a grid that unit is standing on
-    public void HighlightUnitPosition(ArrayList list)
+    public void HighlightUnitPosition(Vector2 index)
     {
-        Vector2 index;
-        for (int i = 0; i < list.Count; ++i)
-        {
-            index = (Vector2)list[i];
-            if (index.x >= 0 && index.x <= m_rows && index.y >= 0 && index.y <= m_columns)
-            {
-                gridmesh[(int)index.x, (int)index.y].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
-                gridmesh[(int)index.x, (int)index.y].GetComponent<Renderer>().enabled = true;
-            }
-        }
+        gridmesh[(int)index.x, (int)index.y].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.INCLOSELIST);
+        gridmesh[(int)index.x, (int)index.y].GetComponent<Grid>().EnableRendering(false);
     }
 
     public Vector3 GetGridPosition(Grid grid)
@@ -228,12 +211,6 @@ public class GridArray : MonoBehaviour
         return Vector2.zero;
     }
 
-    // Used to highlight a grid that unit is standing on
-    public void HighlightUnitPosition(Vector2 index)
-    {
-        gridmesh[(int)index.x, (int)index.y].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.UNAVAILABLE);
-        gridmesh[(int)index.x, (int)index.y].GetComponent<Grid>().EnableRendering(false);
-    }
 
     // Gets position from supplied grid coordinates
     public Vector3 GetPositionAtGrid(int gridx_, int gridz_)
@@ -246,6 +223,38 @@ public class GridArray : MonoBehaviour
     public float GetTerrainHeightAtGrid(Vector3 pos)
     {
         return ground.SampleHeight(pos);
+    }
+
+    bool isGridCollidingWithTerrain(Grid grid)
+    {
+        if (grid.Points[0].y - grid.Points[1].y > SlopeLeniency)
+        {
+            return true;
+        }
+        if (grid.Points[1].y - grid.Points[2].y > SlopeLeniency)
+        {
+            return true;
+        }
+        if (grid.Points[2].y - grid.Points[3].y > SlopeLeniency)
+        {
+            return true;
+        }
+        if (grid.Points[3].y - grid.Points[4].y > SlopeLeniency)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    void UpdateGridAvailability(Grid grid)
+    {
+        bool isColliding = isGridCollidingWithTerrain(grid);
+
+        if (isColliding)
+        {
+            grid.state = Grid.GRID_STATE.UNAVAILABLE;
+            grid.UpdateAvailability();
+        }
     }
 
     void GenerateGrid()
@@ -282,12 +291,15 @@ public class GridArray : MonoBehaviour
                 grid.GetComponent<Grid>().position.y = z;
                 float worldpositionX = x * GridSizeX + GridSizeX * 0.5f;
                 float worldpositionZ = z * GridSizeZ + GridSizeZ * 0.5f;
-                grid.transform.position = new Vector3(worldpositionX, ground.terrainData.GetInterpolatedHeight(worldpositionX / ground.terrainData.size.x, worldpositionZ / ground.terrainData.size.z) + 1, worldpositionZ);
-                grid.GetComponent<Grid>().Points[0] = new Vector3(-halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(-halfGridSizeX + grid.transform.position.x, 0, -halfGridSizeZ + grid.transform.position.z)), -halfGridSizeZ + grid.transform.position.z);
-                grid.GetComponent<Grid>().Points[1] = new Vector3(halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(halfGridSizeX + grid.transform.position.x, 0, -halfGridSizeZ + grid.transform.position.z)), -halfGridSizeZ + grid.transform.position.z);
-                grid.GetComponent<Grid>().Points[2] = new Vector3(halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(halfGridSizeX + grid.transform.position.x, 0, halfGridSizeZ + grid.transform.position.z)), halfGridSizeZ + grid.transform.position.z);
-                grid.GetComponent<Grid>().Points[3] = new Vector3(-halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(-halfGridSizeX + grid.transform.position.x, 0, halfGridSizeZ + grid.transform.position.z)), halfGridSizeZ + grid.transform.position.z);
-                grid.GetComponent<Grid>().Points[4] = new Vector3(-halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(-halfGridSizeX + grid.transform.position.x, 0, -halfGridSizeZ + grid.transform.position.z)), -halfGridSizeZ + grid.transform.position.z);
+                // Update the grid position
+                grid.transform.position = new Vector3(worldpositionX, ground.terrainData.GetInterpolatedHeight(worldpositionX / ground.terrainData.size.x, worldpositionZ / ground.terrainData.size.z), worldpositionZ);
+                // Create Four Points that define the grid
+                grid.GetComponent<Grid>().Points[0] = new Vector3(-halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(-halfGridSizeX + grid.transform.position.x, 0, -halfGridSizeZ + grid.transform.position.z)) + 2, -halfGridSizeZ + grid.transform.position.z);
+                grid.GetComponent<Grid>().Points[1] = new Vector3(halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(halfGridSizeX + grid.transform.position.x, 0, -halfGridSizeZ + grid.transform.position.z))   + 2, -halfGridSizeZ + grid.transform.position.z);
+                grid.GetComponent<Grid>().Points[2] = new Vector3(halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(halfGridSizeX + grid.transform.position.x, 0, halfGridSizeZ + grid.transform.position.z))    + 2, halfGridSizeZ + grid.transform.position.z);
+                grid.GetComponent<Grid>().Points[3] = new Vector3(-halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(-halfGridSizeX + grid.transform.position.x, 0, halfGridSizeZ + grid.transform.position.z))  + 2, halfGridSizeZ + grid.transform.position.z);
+                grid.GetComponent<Grid>().Points[4] = new Vector3(-halfGridSizeX + grid.transform.position.x, ground.SampleHeight(new Vector3(-halfGridSizeX + grid.transform.position.x, 0, -halfGridSizeZ + grid.transform.position.z)) + 2, -halfGridSizeZ + grid.transform.position.z);
+                UpdateGridAvailability(grid.GetComponent<Grid>());
                 grid.GetComponent<LineRenderer>().SetVertexCount(5);
                 grid.GetComponent<LineRenderer>().SetPositions(grid.GetComponent<Grid>().Points);
                 grid.GetComponent<LineRenderer>().SetWidth(3, 3);

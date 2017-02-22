@@ -145,6 +145,7 @@ MonoBehaviour:
   CohesionWeight: 1
   SeperationWeight: 1
   AlignmentWeight: 1
+  buildingP: {fileID: 0}
 --- !u!4 &88376218
 Transform:
   m_ObjectHideFlags: 0
@@ -1150,7 +1151,7 @@ LineRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1032300168}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_Materials:
   - {fileID: 0}
@@ -1769,7 +1770,7 @@ MonoBehaviour:
   MinConstrainZ: 0
   MaxConstrainZ: 500
   zoomMaxLevel: 20
-  zoomMinLevel: 0
+  zoomMinLevel: 1
   ground: {fileID: 563120803}
   debugtext: {fileID: 1677640607}
 --- !u!1 &1348782948

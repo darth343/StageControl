@@ -34,7 +34,7 @@ public class Building : MonoBehaviour {
 
     Vector3 GetMaxPosOfBuilding(Vector3 position, int othersize)
     {
-        Vector3 maxpos = position + new Vector3(SceneData.sceneData.gridmesh.GridSizeX * (othersize - 1), 0, SceneData.sceneData.gridmesh.GridSizeX * (othersize - 1));
+        Vector3 maxpos = position + new Vector3(SceneData.sceneData.gridmesh.GridSizeX * (othersize), 0, SceneData.sceneData.gridmesh.GridSizeX * (othersize));
         return maxpos;
     }
 

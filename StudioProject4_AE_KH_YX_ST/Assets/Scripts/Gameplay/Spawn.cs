@@ -33,12 +33,13 @@ public class Spawn : MonoBehaviour {
         if (m_initController == false)
         {
             m_controller = new GameObject();
-            m_controller.name = "UnitController";
+            m_controller.name = "EntityList";
             GameObject temp = new GameObject();
             Canvas temp_canvas = temp.AddComponent<Canvas>();
             temp_canvas.transform.SetParent(m_controller.transform);
             temp_canvas.renderMode = RenderMode.WorldSpace;
             m_initController = true;
+            SceneData.sceneData.EntityList = m_controller;
         }
         //temp.worldCamera = 
         //SharedData.instance.gridmesh.GetOccupiedGrids(transform.position, transform.localScale);
@@ -55,7 +56,7 @@ public class Spawn : MonoBehaviour {
                 spawn = (GameObject)Instantiate(m_entity); // Create a copy of the original "hell"spawn
                 spawn.transform.SetParent(m_controller.transform);
                 spawn.GetComponent<Health>().MAX_HEALTH = 100;
-                spawn.GetComponent<Unit>().PathToEnd = GetComponent<Pathfinder>().PathToEnd;
+                spawn.GetComponent<Unit>().SetPath(GetComponent<Pathfinder>().PathToEnd);
                 GameObject handle, handleChild;
                 handle  = new GameObject();
                 handleChild = new GameObject();
@@ -99,7 +100,6 @@ public class Spawn : MonoBehaviour {
                 m_entityList.Add(spawn);
             }
             m_timer.Reset();
-            m_spawnAmt = 0; // Take away this to make it spawn repeatedly
         }
 	}
 }

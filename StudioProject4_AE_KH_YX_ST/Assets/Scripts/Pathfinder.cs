@@ -89,8 +89,7 @@ public class Pathfinder : MonoBehaviour
                 StartNode.G = 0;
                 StartNode.H = StartNode.Distance(EndNode);
                 EndNode.posX = (int)SceneData.sceneData.gridmesh.GetGridPosition(EndGrid).x;
-                EndNode.posY = (int)SceneData.sceneData.gridmesh.GetGridPosition(EndGrid).y;
-                Debug.Log("END NODE POS: " + EndNode.posX + ", " + EndNode.posY);
+                EndNode.posY = (int)SceneData.sceneData.gridmesh.GetGridPosition(EndGrid).y;;
                 EndNode.G = EndNode.Distance(StartNode);
                 EndNode.H = 0;
                 OpenList.Add(StartNode);
@@ -123,8 +122,10 @@ public class Pathfinder : MonoBehaviour
                 Node getPath;
                 for (getPath = currentNode; getPath != null; getPath = getPath.parent)
                 {
+                    Vector3 Waypoint = new Vector3(getPath.posX * SceneData.sceneData.gridmesh.GridSizeX, 1, getPath.posY * SceneData.sceneData.gridmesh.GridSizeZ);
+                    Waypoint.y = SceneData.sceneData.ground.SampleHeight(Waypoint);
                     SceneData.sceneData.gridmesh.gridmesh[getPath.posX, getPath.posY].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.ISPATH);
-                    PathToEnd.Add(new Vector3(getPath.posX * SceneData.sceneData.gridmesh.GridSizeX, 1, getPath.posY * SceneData.sceneData.gridmesh.GridSizeZ));
+                    PathToEnd.Add(Waypoint);
                 }
             }
             else 
@@ -147,8 +148,7 @@ public class Pathfinder : MonoBehaviour
 
     }
 
-    void 
-        OpenNode(int posX, int posY, float newCost, Node parent)
+    void OpenNode(int posX, int posY, float newCost, Node parent)
     {
         if (posX < 0 || posX > SceneData.sceneData.gridmesh.m_rows - 1|| posY < 0 || posY > SceneData.sceneData.gridmesh.m_columns - 1)
         {

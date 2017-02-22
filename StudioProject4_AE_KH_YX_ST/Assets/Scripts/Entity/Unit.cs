@@ -27,6 +27,12 @@ public class Unit : MonoBehaviour {
     public List<Vector3> PathToEnd = null;
     private int pathindex = 0;
 
+    public void SetPath(List<Vector3> newPath)
+    {
+        PathToEnd = newPath;
+        pathindex = newPath.Count - 1;
+    }
+
 	// Use this for initialization
 	void Start () {
         m_currGrid = SceneData.sceneData.gridmesh.GetGridIndexAtPosition(transform.position);
@@ -91,7 +97,7 @@ public class Unit : MonoBehaviour {
                 {
                     temp1.x = i;
                     temp1.y = j;
-                    SceneData.sceneData.gridmesh.HighlightUnitPosition(temp1);
+                    //SceneData.sceneData.gridmesh.HighlightUnitPosition(temp1);
                 }
             }
             m_oldGrid = m_currGrid;
@@ -132,10 +138,10 @@ public class Unit : MonoBehaviour {
             if (PathToEnd.Count > 0)
             {
                 GetComponent<VMovement>().Velocity = (PathToEnd[pathindex] - transform.position).normalized;
-                if ((PathToEnd[pathindex] - transform.position).sqrMagnitude < 10 * 10)
+                if ((PathToEnd[pathindex] - transform.position).sqrMagnitude < GetComponent<VMovement>().speed * GetComponent<VMovement>().speed)
                 {
-                    ++pathindex;
-                    if (pathindex >= PathToEnd.Count)
+                    --pathindex;
+                    if (pathindex <= 0)
                     {
                         PathToEnd.Clear();
                     }

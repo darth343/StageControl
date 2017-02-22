@@ -47,19 +47,19 @@ public class HoverHandler : MonoBehaviour {
 
         
         selected.localScale = new Vector3(1, 1, 1);
-        Debug.Log("off");
+        //Debug.Log("off");
     }
 
     public void PanelEnter()
     {
-        Debug.Log("onpanel");
+        //Debug.Log("onpanel");
         SceneData.sceneData.handhandler.SetOnplayArea(false);
        
     }
 
     public void PanelExit()
       {
-          Debug.Log("offpanel");
+          //Debug.Log("offpanel");
           SceneData.sceneData.handhandler.SetOnplayArea(true);
     }
 }

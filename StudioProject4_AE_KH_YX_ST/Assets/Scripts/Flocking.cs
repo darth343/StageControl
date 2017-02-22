@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Flocking:MonoBehaviour
 {
-    public float NeighborRadius = 50f;
+    public float NeighborRadius = 200f;
     public float SeperationOffset = 800f;
     public List<GameObject> FlockingList = new List<GameObject>();
     public GameObject leader;
@@ -128,7 +128,7 @@ public class Flocking:MonoBehaviour
 
     Vector3 cohesion(GameObject leader)
     {
-	    Vector3 temp = (leader.GetComponent<VMovement>().Velocity * -1f).normalized *0.2f;
+	    //Vector3 temp = (leader.GetComponent<VMovement>().Velocity * -1f).normalized *0.2f;
         Vector3 CenterOfMass = leader.transform.position;
 	    return(CenterOfMass - gameObject.transform.position).normalized;
     }
