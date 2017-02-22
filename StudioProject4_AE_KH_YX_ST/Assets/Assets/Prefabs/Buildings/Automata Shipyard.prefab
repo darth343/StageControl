@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &118704
 GameObject:
   m_ObjectHideFlags: 1
@@ -528,7 +528,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_secondsToSpawn: 10
-  m_controller: {fileID: 0}
   m_entity: {fileID: 106502, guid: 6f889c45066575344b892cf0e5aedeb3, type: 2}
   m_orientationX: right
   m_orientationZ: up
@@ -549,6 +548,12 @@ MonoBehaviour:
   buildtime: 0
   spawntime: 0
   size: 2
+  holo: {fileID: 0}
+  undamaged: {fileID: 0}
+  damaged: {fileID: 0}
+  b_state: 0
+  isfriendly: 0
+  buildTimer: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
