@@ -1,15 +1,15 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &198736
+--- !u!1 &176524
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 404374}
-  - 198: {fileID: 19892458}
-  - 199: {fileID: 19971462}
+  - 4: {fileID: 429236}
+  - 198: {fileID: 19837254}
+  - 199: {fileID: 19902614}
   m_Layer: 0
   m_Name: BuildingParticles
   m_TagString: Untagged
@@ -17,24 +17,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &404374
+--- !u!4 &429236
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 198736}
+  m_GameObject: {fileID: 176524}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 107.5, y: 17.4, z: 399.4}
   m_LocalScale: {x: 0.8215838, y: 0.8215838, z: 0.8215838}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!198 &19892458
+--- !u!198 &19837254
 ParticleSystem:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 198736}
+  m_GameObject: {fileID: 176524}
   serializedVersion: 2
   lengthInSec: 20
   startDelay:
@@ -76,7 +76,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 1
   scalingMode: 1
   InitialModule:
@@ -1508,12 +1508,12 @@ ParticleSystem:
     subEmitterCollision1: {fileID: 0}
     subEmitterDeath: {fileID: 0}
     subEmitterDeath1: {fileID: 0}
---- !u!199 &19971462
+--- !u!199 &19902614
 ParticleSystemRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 198736}
+  m_GameObject: {fileID: 176524}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -1558,5 +1558,5 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 198736}
+  m_RootGameObject: {fileID: 176524}
   m_IsPrefabParent: 1

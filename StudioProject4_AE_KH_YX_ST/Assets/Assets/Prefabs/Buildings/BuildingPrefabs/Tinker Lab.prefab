@@ -176,7 +176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &199494
 GameObject:
   m_ObjectHideFlags: 1
@@ -670,7 +670,7 @@ MonoBehaviour:
   damaged: {fileID: 2100000, guid: 9241aa8f6241bfb43b0f319bc06f291b, type: 2}
   b_state: 0
   isfriendly: 0
-  buildTimer: 0
+  buildTimer: 10
 --- !u!114 &11455646
 MonoBehaviour:
   m_ObjectHideFlags: 1

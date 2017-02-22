@@ -181,7 +181,7 @@ MonoBehaviour:
   goldValue: 50
   Time: 30
   cardDescr: Summons a spider tank that destroys his enemies
-  GOModel: {fileID: 179582, guid: b69fb80eca42e04439668e211b052f8e, type: 2}
+  GOModel: {fileID: 193894, guid: b86c1ae52a6e6844183155907a587fbe, type: 2}
   nameText: {fileID: 11476448}
   goldText: {fileID: 11497684}
   timeText: {fileID: 11497122}

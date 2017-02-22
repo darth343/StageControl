@@ -120,7 +120,7 @@ MonoBehaviour:
   goldValue: 5
   Time: 8
   cardDescr: Summons Clockwork Soldiers that is formidable when in groups
-  GOModel: {fileID: 123126, guid: 256a7d74c6a80f34ba9669df3045b005, type: 2}
+  GOModel: {fileID: 133970, guid: 2314ea097235f2d45845e74971167d96, type: 2}
   nameText: {fileID: 11495136}
   goldText: {fileID: 11415052}
   timeText: {fileID: 11489994}

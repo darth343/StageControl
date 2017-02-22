@@ -354,7 +354,7 @@ MonoBehaviour:
   goldValue: 40
   Time: 25
   cardDescr: Summons a Railgun that fires in a line
-  GOModel: {fileID: 121680, guid: a9e9b968e327452478e032141b640e15, type: 2}
+  GOModel: {fileID: 195730, guid: 37fbfbb50453c754aa1b669b1ab3ccbd, type: 2}
   nameText: {fileID: 11415320}
   goldText: {fileID: 11444130}
   timeText: {fileID: 11434720}
