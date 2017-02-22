@@ -19,10 +19,14 @@ public class UnitCards : MonoBehaviour {
 	public string buildingName;
 	public string UnitType;
 	public int goldValue;
+    public float Time;
+    public string cardDescr;
     public GameObject GOModel;
     RectTransform card;
-    public Text statsText;
     public Text nameText;
+    public Text goldText;
+    public Text timeText;
+    public Text cardDescription;
     public CARD_TYPE cardType;
     float w,h;
 	// Use this for initialization
@@ -58,8 +62,10 @@ public class UnitCards : MonoBehaviour {
 
     public void SetText()
     {
-        statsText.text = "Unit Type: " + UnitType + "\n" + "Gold: " + goldValue;
-        nameText.text = buildingName;
+        nameText.text = buildingName + "\n" + " Factory";
+        goldText.text = goldValue.ToString();
+        timeText.text = Time.ToString();
+        cardDescription.text = cardDescr;
     }
 		
 }
