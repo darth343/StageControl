@@ -23,6 +23,16 @@ public class Grid : MonoBehaviour
         return new Vector3(position.x * gameObject.transform.parent.GetComponent<GridArray>().GridSizeX + gameObject.transform.parent.GetComponent<GridArray>().GridSizeX * 0.5f, 0, position.y * gameObject.transform.parent.GetComponent<GridArray>().GridSizeZ + gameObject.transform.parent.GetComponent<GridArray>().GridSizeZ * 0.5f);
     }
 
+    public Vector3 GetMinPos()
+    {
+        return new Vector3(transform.position.x - SceneData.sceneData.gridmesh.GridSizeX, transform.position.y, transform.position.z - SceneData.sceneData.gridmesh.GridSizeZ); 
+    }
+
+    public Vector3 GetMaxPos()
+    {
+        return new Vector3(transform.position.x + SceneData.sceneData.gridmesh.GridSizeX, transform.position.y, transform.position.z + SceneData.sceneData.gridmesh.GridSizeZ); 
+    }
+
     public GRID_STATE CollidedWithTerrain()
     {
         if (SharedData.instance == null)

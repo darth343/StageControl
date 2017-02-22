@@ -124,7 +124,7 @@ public class Pathfinder : MonoBehaviour
                 {
                     Vector3 Waypoint = new Vector3(getPath.posX * SceneData.sceneData.gridmesh.GridSizeX, 1, getPath.posY * SceneData.sceneData.gridmesh.GridSizeZ);
                     Waypoint.y = SceneData.sceneData.ground.SampleHeight(Waypoint);
-                    SceneData.sceneData.gridmesh.gridmesh[getPath.posX, getPath.posY].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.ISPATH);
+                    //SceneData.sceneData.gridmesh.gridmesh[getPath.posX, getPath.posY].GetComponent<Grid>().ChangeState(Grid.GRID_STATE.ISPATH);
                     PathToEnd.Add(Waypoint);
                 }
             }
@@ -203,7 +203,7 @@ public class Pathfinder : MonoBehaviour
             }
         }
         Grid tempGrid = SceneData.sceneData.gridmesh.gridmesh[posX, posY].GetComponent<Grid>();
-        tempGrid.GetComponent<Grid>().ChangeState(Grid.GRID_STATE.INOPENLIST);
+        //tempGrid.GetComponent<Grid>().ChangeState(Grid.GRID_STATE.INOPENLIST);
         OpenList.Add(newNode);
     }
 
@@ -229,7 +229,7 @@ public class Pathfinder : MonoBehaviour
         {
             OpenList.Remove(nextnode);
             Grid tempGrid = SceneData.sceneData.gridmesh.gridmesh[nextnode.posX, nextnode.posY].GetComponent<Grid>();
-            tempGrid.GetComponent<Grid>().ChangeState(Grid.GRID_STATE.INCLOSELIST);
+            //tempGrid.GetComponent<Grid>().ChangeState(Grid.GRID_STATE.INCLOSELIST);
             VisitedList.Add(nextnode);
         }
 

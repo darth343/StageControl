@@ -47,7 +47,7 @@ public class Unit : MonoBehaviour {
             {
                 temp1.x = i;
                 temp1.y = j;
-                SceneData.sceneData.gridmesh.HighlightUnitPosition(temp1);
+                //SceneData.sceneData.gridmesh.HighlightUnitPosition(temp1);
             }
         }
 

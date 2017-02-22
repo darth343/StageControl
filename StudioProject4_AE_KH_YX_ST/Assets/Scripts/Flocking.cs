@@ -35,17 +35,13 @@ public class Flocking:MonoBehaviour
 
     void UpdateLeadership()
     {
-        //if(!isleader)
-        //{
-        //    if(leader)
-        //    {
-        //        if(leader.GetComponent<Flocking>().isleader == false)
-        //        {
-        //            leader = null;
-        //            isleader = true;
-        //        }
-        //    }
-        //}
+        if (!isleader)
+        {
+            if (!leader)
+            {
+                isleader = true;
+            }
+        }
 
         if (isleader)
         {

@@ -51,10 +51,11 @@ public class CameraController : MonoBehaviour
 
     void OnButtonDown()
     {
-
-
 #if UNITY_ANDROID
-        lastcameraposition = GetComponent<Camera>().transform.position;
+        if(SceneData.sceneData.handhandler.onPlayArea(Input.GetTouch(0).position) == false || SceneData.sceneData.isHoldingCard)
+        {
+            return;
+        }
         lasttouchposition = Input.GetTouch(0).position;
         FingerDown = true;
 #else
@@ -79,7 +80,15 @@ public class CameraController : MonoBehaviour
         if (SceneData.sceneData.isHoldingCard)
             return;
 #if UNITY_ANDROID
-        SetCameraPosition(new Vector3(lastcameraposition.x + (lasttouchposition.x - Input.GetTouch(0).position.x) * sensitivityX, lastcameraposition.y, lastcameraposition.z + (lasttouchposition.y - Input.mousePosition.y) * sensitivityY));
+        float xdelta = (lasttouchposition.x - Input.GetTouch(0).position.x) * sensitivityX;
+        float ydelta = (lasttouchposition.y - Input.GetTouch(0).position.y) * sensitivityY;
+        //newCameraPos.Set(Mathf.Clamp(lastcameraposition.x + (lasttouchposition.x - Input.mousePosition.x) * sensitivityX, MinConstrainX, MaxConstrainX), lastcameraposition.y, Mathf.Clamp(lastcameraposition.z + (lasttouchposition.y - Input.mousePosition.y) * sensitivityY, MinConstrainZ, MaxConstrainZ));
+        newCameraPos = GetCamera().transform.position;
+        newCameraPos.x += GetCamera().transform.forward.x * ydelta + GetCamera().transform.right.x * xdelta;
+        newCameraPos.z += GetCamera().transform.forward.z * ydelta + GetCamera().transform.right.z * xdelta;
+        newCameraPos.x = Mathf.Clamp(newCameraPos.x, MinConstrainX, MaxConstrainX);
+        newCameraPos.z = Mathf.Clamp(newCameraPos.z, MinConstrainZ, MaxConstrainZ);
+        SetCameraPosition(newCameraPos);
         RaycastHit hit;
         Ray ray = GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0));
         if (ground.GetComponent<Collider>().Raycast(ray, out hit, 1000.0f))
@@ -88,6 +97,7 @@ public class CameraController : MonoBehaviour
             ground.SampleHeight(ray.GetPoint(hit.distance));
             SetCameraPosition(ray.GetPoint(hit.distance) + (direction * CameraDistanceFromTerrain));
         }
+        lasttouchposition = Input.GetTouch(0).position;
 #else
         float xdelta = (lasttouchposition.x - Input.mousePosition.x) * sensitivityX;
         float ydelta = (lasttouchposition.y - Input.mousePosition.y) * sensitivityY;
@@ -191,6 +201,8 @@ public class CameraController : MonoBehaviour
         }
         else if(Input.touchCount == 1)
         {
+            if (Finger2Down)
+                return;
             if (Input.touchCount == 1 && !FingerDown)
             {
                 OnButtonDown();
@@ -231,6 +243,6 @@ public class CameraController : MonoBehaviour
             zoomUpdate();
         }
 #endif
-        
-	}
+
+    }
 }
