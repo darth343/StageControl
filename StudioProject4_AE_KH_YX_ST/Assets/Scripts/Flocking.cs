@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Flocking:MonoBehaviour
+public class Flocking : MonoBehaviour
 {
     public float NeighborRadius = 200f;
     public float SeperationOffset = 800f;
@@ -27,7 +27,7 @@ public class Flocking:MonoBehaviour
             gameObject.GetComponent<VMovement>().Velocity.x = Mathf.Clamp(gameObject.GetComponent<VMovement>().Velocity.x, -MAX, MAX);
             gameObject.GetComponent<VMovement>().Velocity.z = Mathf.Clamp(gameObject.GetComponent<VMovement>().Velocity.z, -MAX, MAX);
         }
-        else 
+        else
         {
             Debug.DrawLine(transform.position, transform.position + new Vector3(0, 1000, 0), Color.blue);
         }
@@ -90,7 +90,7 @@ public class Flocking:MonoBehaviour
         {
             if (gameObject == SceneData.sceneData.EntityList.transform.GetChild(i).gameObject)
                 continue;
-            if ( (SceneData.sceneData.EntityList.transform.GetChild(i).position - transform.position).sqrMagnitude < NeighborRadius * NeighborRadius)
+            if ((SceneData.sceneData.EntityList.transform.GetChild(i).position - transform.position).sqrMagnitude < NeighborRadius * NeighborRadius)
             {
                 FlockingList.Add(SceneData.sceneData.EntityList.transform.GetChild(i).gameObject);
             }
@@ -106,7 +106,7 @@ public class Flocking:MonoBehaviour
             temp = (repel.magnitude / SeperationOffset);
             repel = repel.normalized;
             repel = new Vector3(repel.x / temp, repel.y / temp, repel.z / temp);
-            
+
             return repel.normalized;
 
         }
@@ -116,17 +116,17 @@ public class Flocking:MonoBehaviour
     Vector3 alignment(Vector3 force)
     {
         if (force != new Vector3(0, 0, 0))
-	    {
-		    return force.normalized;
-	    }
-	    return new Vector3(0, 0, 0);
+        {
+            return force.normalized;
+        }
+        return new Vector3(0, 0, 0);
     }
 
     Vector3 cohesion(GameObject leader)
     {
-	    //Vector3 temp = (leader.GetComponent<VMovement>().Velocity * -1f).normalized *0.2f;
+        //Vector3 temp = (leader.GetComponent<VMovement>().Velocity * -1f).normalized *0.2f;
         Vector3 CenterOfMass = leader.transform.position;
-	    return(CenterOfMass - gameObject.transform.position).normalized;
+        return (CenterOfMass - gameObject.transform.position).normalized;
     }
 
 }

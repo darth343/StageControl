@@ -46,6 +46,7 @@ public class GridArray : MonoBehaviour
         float offset = (size - 1f);
         Vector3 maxpos = new Vector3(position.x + (GridSizeX *0.5f) * offset, position.y, position.z + (GridSizeZ * 0.5f) * offset);
         GameObject max = GetGridAtPosition(maxpos);
+        int a = 0;
         Vector3 snaplocation = max.GetComponent<Grid>().GetWorldPosition();
         snaplocation.z -= (GridSizeZ*0.5f) * offset;
         snaplocation.x -= (GridSizeX*0.5f) * offset;

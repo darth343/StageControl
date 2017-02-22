@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Spawn : MonoBehaviour {
+public class Spawn : MonoBehaviour
+{
     // How many seconds before next spawn
     public float m_secondsToSpawn;
     private Timer m_timer;
@@ -25,7 +26,8 @@ public class Spawn : MonoBehaviour {
     // The building of the spawner
     private Building m_building;
 
-	void Start () {
+    void Start()
+    {
         m_timer = this.gameObject.AddComponent<Timer>();
         m_timer.Init(0, m_secondsToSpawn, 0);
         m_entityList = new List<GameObject>();
@@ -43,9 +45,10 @@ public class Spawn : MonoBehaviour {
         }
         //temp.worldCamera = 
         //SharedData.instance.gridmesh.GetOccupiedGrids(transform.position, transform.localScale);
-	}
+    }
 
-	void Update () {
+    void Update()
+    {
         m_timer.Update();
         //SharedData.instance.gridmesh.RenderBuildGrids(transform.position, transform.localScale);
         if (m_timer.can_run && m_spawnAmt > 0 && m_building.b_state == Building.BUILDSTATE.B_ACTIVE && GetComponent<Pathfinder>().PathFound)
@@ -58,7 +61,7 @@ public class Spawn : MonoBehaviour {
                 spawn.GetComponent<Health>().MAX_HEALTH = 100;
                 spawn.GetComponent<Unit>().SetPath(GetComponent<Pathfinder>().PathToEnd);
                 GameObject handle, handleChild;
-                handle  = new GameObject();
+                handle = new GameObject();
                 handleChild = new GameObject();
                 Image img, imgChild;
                 //handle = handleChild = (GameObject)Instantiate(m_entity);
@@ -77,7 +80,7 @@ public class Spawn : MonoBehaviour {
                 //spawn.AddComponent<HealthBar>(); // Give it a healthbar
                 Vector2 this_grid = SceneData.sceneData.gridmesh.GetGridIndexAtPosition(transform.position);
                 //SharedData.instance.gridmesh.GetGridAtPosition(transform.position);
-         
+
                 //Debug.Log(transform.position);
                 int orientationX;
                 int orientationZ;
@@ -101,5 +104,5 @@ public class Spawn : MonoBehaviour {
             }
             m_timer.Reset();
         }
-	}
+    }
 }

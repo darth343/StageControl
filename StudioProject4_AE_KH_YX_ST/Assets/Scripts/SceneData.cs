@@ -10,7 +10,7 @@ public class SceneData : MonoBehaviour
     public GridArray gridmesh;
     public Text debuginfo;
     public Terrain ground;
-
+    public PlayerInfo Player;
 
     //Decks
     public GameObject PlayerDeck = null;
