@@ -6,7 +6,6 @@ public class LevelManager : MonoBehaviour
     public static LevelManager instance = null;
     public GameObject PlayerBase;
     public GameObject EnemyBase;
-
 	// Use this for initialization
 	void Start ()
     {
